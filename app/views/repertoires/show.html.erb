@@ -1,0 +1,5 @@
+Repertoire : <%= @repertoire.name %>
+
+<% @repertoire.positions.each do |position| %>
+  <%= position.fen %>
+<% end %>
