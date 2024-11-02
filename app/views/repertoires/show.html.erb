@@ -1,18 +1,25 @@
 Repertoire : <%= @repertoire.name %>
 
-<div>
-<%= @repertoire.main_hole.fen %>
-<div id="chessboard" class="blue merida">
+<div class="row">
+  <div class="col-4">
+    <div id="chessboard" class="blue merida">a</div>
+  </div>
 </div>
----
-<% @repertoire.main_hole.moves.each do |move| %>
-  <div>Move: <%= move.san %></div>
-<% end %>
+<div class="row">
+  <% @repertoire.main_hole.moves.each do |move| %>
+    <div>Move: <%= move.san %></div>
+    <%= form_for RepertoireMove.new do  |f| %>
+      <%= f.hidden_field :move_id, value: move.id %>
+      <%= f.hidden_field :repertoire_position_id, value: @repertoire.main_hole.id %>
+      <%= f.button move.san %>
+    <% end %>
+  <% end %>
+</div>
 </div>
 
 <script type="module">
 
-import { Chessground } from 'chessground'
+  import { Chessground } from 'chessground'
 let board = document.getElementById('chessboard')
 
 Chessground(board, {})
