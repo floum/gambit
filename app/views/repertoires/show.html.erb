@@ -6,4 +6,8 @@ Repertoire : <%= @repertoire.name %>
 
 <div>
 Main Hole: <%= @repertoire.main_hole.fen %>
+---
+<% @repertoire.main_hole.moves.each do |move| %>
+  <div>Move: <%= move.san %></div>
+<% end %>
 </div>

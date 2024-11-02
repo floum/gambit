@@ -5,4 +5,5 @@ class RepertoirePosition < ApplicationRecord
 
   delegate :count, to: :position, prefix: false
   delegate :fen, to: :position, prefix: false
+  delegate :moves, to: :position, prefix: false
 end
