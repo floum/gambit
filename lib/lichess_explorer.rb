@@ -7,12 +7,13 @@ class NullMove
 end
 
 class LichessExplorerMove
-  attr_accessor :count, :san
+  attr_accessor :count, :san, :uci
 
   def self.parse(response)
     move = LichessExplorerMove.new
     move.count = response['white'] + response['draws'] + response['black']
     move.san = response['san']
+    move.uci = response['uci']
     move
   end
 end
@@ -47,7 +48,7 @@ class LichessExplorer
 
   def self.fetch(fen)
     response = HTTParty.get(ENDPOINT, query: {
-      fen: FEN,
+      fen: fen,
       speeds: "blitz,rapid,classical",
       ratings: "2200,2500"
     })
