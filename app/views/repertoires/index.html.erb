@@ -2,5 +2,5 @@
 
 <% @repertoires.each do |repertoire| %>
 
-  <%= link_to repertoire.name, repertoire_path(repertoire) %> - <%= repertoire.color %>
+  <%= link_to repertoire.name, repertoire_path(repertoire) %> - <%= repertoire.white? ? 'white' : 'black' %>
 <% end %>

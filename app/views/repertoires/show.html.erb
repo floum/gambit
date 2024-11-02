@@ -1,5 +1,9 @@
 Repertoire : <%= @repertoire.name %>
 
 <% @repertoire.positions.each do |position| %>
-  <%= position.fen %>
+  <div><%= position.fen %></div>
 <% end %>
+
+<div>
+Main Hole: <%= @repertoire.main_hole.fen %>
+</div>
