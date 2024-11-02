@@ -2,9 +2,3 @@
 import "popper"
 import "bootstrap"
 
-import 'chessground';
-import { Chessground } from 'chessground'
-
-let board = document.getElementById('chessboard')
-
-Chessground(board, {})

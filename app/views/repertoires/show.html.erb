@@ -9,3 +9,11 @@ Repertoire : <%= @repertoire.name %>
   <div>Move: <%= move.san %></div>
 <% end %>
 </div>
+
+<script type="module">
+
+import { Chessground } from 'chessground'
+let board = document.getElementById('chessboard')
+
+Chessground(board, {})
+</script>
