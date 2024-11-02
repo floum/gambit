@@ -1,0 +1,54 @@
+/*
+ * Board
+ */
+.blue cg-board {
+  background-image: image-url('board/blue.svg');
+}
+
+.merida cg-board piece.pawn.white {
+  background-image: image-url('pieces/merida/wP.svg');
+}
+
+.merida cg-board piece.bishop.white {
+  background-image: image-url('pieces/merida/wB.svg');
+}
+
+.merida cg-board piece.knight.white {
+  background-image: image-url('pieces/merida/wN.svg');
+}
+
+.merida cg-board piece.rook.white {
+  background-image: image-url('pieces/merida/wR.svg');
+}
+
+.merida cg-board piece.queen.white {
+  background-image: image-url('pieces/merida/wQ.svg');
+}
+
+.merida cg-board piece.king.white {
+  background-image: image-url('pieces/merida/wK.svg');
+}
+
+.merida cg-board piece.pawn.black {
+  background-image: image-url('pieces/merida/bP.svg');
+}
+
+.merida cg-board piece.bishop.black {
+  background-image: image-url('pieces/merida/bB.svg');
+}
+
+.merida cg-board piece.knight.black {
+  background-image: image-url('pieces/merida/bN.svg');
+}
+
+.merida cg-board piece.rook.black {
+  background-image: image-url('pieces/merida/bR.svg');
+}
+
+.merida cg-board piece.queen.black {
+  background-image: image-url('pieces/merida/bQ.svg');
+}
+
+.merida cg-board piece.king.black {
+  background-image: image-url('pieces/merida/bK.svg');
+}
