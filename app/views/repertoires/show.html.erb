@@ -22,5 +22,7 @@ Repertoire : <%= @repertoire.name %>
   import { Chessground } from 'chessground'
 let board = document.getElementById('chessboard')
 
-Chessground(board, {})
+Chessground(board, {
+fen: "<%= @repertoire.main_hole.fen %>"
+})
 </script>

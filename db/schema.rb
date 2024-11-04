@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_02_015214) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_03_160228) do
   create_table "move_counts", force: :cascade do |t|
     t.integer "move_id", null: false
     t.integer "value"
@@ -25,7 +25,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_02_015214) do
     t.datetime "updated_at", null: false
     t.string "uci"
     t.string "san"
+    t.integer "result_id", null: false
     t.index ["position_id"], name: "index_moves_on_position_id"
+    t.index ["result_id"], name: "index_moves_on_result_id"
   end
 
   create_table "position_counts", force: :cascade do |t|
@@ -70,6 +72,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_02_015214) do
 
   add_foreign_key "move_counts", "moves"
   add_foreign_key "moves", "positions"
+  add_foreign_key "moves", "positions", column: "result_id"
   add_foreign_key "position_counts", "positions"
   add_foreign_key "repertoire_moves", "moves"
   add_foreign_key "repertoire_moves", "repertoire_positions"

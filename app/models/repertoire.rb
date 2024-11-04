@@ -8,7 +8,7 @@ class Repertoire < ApplicationRecord
 
   def main_hole
     repertoire_positions.select do |repertoire_position|
-      !repertoire_position.repertoire_move
+      repertoire_position.repertoire_move.nil?
     end.max_by(&:count)
   end
 
