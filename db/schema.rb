@@ -11,32 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_11_16_153631) do
-  create_table "move_counts", force: :cascade do |t|
-    t.integer "move_id", null: false
-    t.integer "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["move_id"], name: "index_move_counts_on_move_id"
-  end
-
   create_table "moves", force: :cascade do |t|
     t.integer "position_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uci"
     t.string "san"
-    t.integer "result_id", null: false
+    t.integer "result_id", null: true
     t.integer "count"
     t.index ["position_id"], name: "index_moves_on_position_id"
     t.index ["result_id"], name: "index_moves_on_result_id"
-  end
-
-  create_table "position_counts", force: :cascade do |t|
-    t.integer "position_id", null: false
-    t.integer "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["position_id"], name: "index_position_counts_on_position_id"
   end
 
   create_table "positions", force: :cascade do |t|

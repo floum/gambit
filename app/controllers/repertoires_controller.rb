@@ -16,7 +16,10 @@ class RepertoiresController < ApplicationController
   end
 
   def create
-    @repertoire = Repertoire.create(repertoire_params)
+    @repertoire = Repertoire.new(repertoire_params)
+    if @repertoire.save
+      redirect_to repertoires_path
+    end
   end
 
   private

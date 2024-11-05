@@ -2,12 +2,12 @@ class Position < ApplicationRecord
   has_many :position_counts
   has_many :moves
 
-  STARTING_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+  STARTING_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
   after_create :update_from_lichess_explorer
 
   def self.starting_position
-    Position.find_or_create_by(fen: STARTING_FEN) 
+    Position.find_or_create_by(fen: STARTING_FEN)
   end
 
   def update_from_lichess_explorer

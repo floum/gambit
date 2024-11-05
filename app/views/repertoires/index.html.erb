@@ -7,3 +7,15 @@
 <% end %>
 
 <%= link_to 'New', new_repertoire_path %>
+
+<h2>New Repertoire</h2>
+
+<%= form_for Repertoire.new do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :white %>
+  <%= f.check_box :white %>
+  <%= f.label :precision %>
+  <%= f.collection_select :precision, [10, 20, 50], :to_s, :to_s %>
+  <%= f.submit %>
+<% end %>
