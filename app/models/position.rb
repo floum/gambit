@@ -10,17 +10,20 @@ class Position < ApplicationRecord
     Position.find_or_create_by(fen: STARTING_FEN) 
   end
 
-  def count
-    position_counts.order(:created_at).last.value
-  end
-
   def update_from_lichess_explorer
-    return if !position_counts.empty? && position_counts.order(:created_at).pluck(:created_at).last > 14.day.ago
+    return if count && updated_at > 1.days.ago
     response = LichessExplorer.fetch(fen)
-    PositionCount.create(value: response.count, position: self)
+    self.count = response.count
     response.moves.each do |response_move|
-      move = Move.find_or_create_by(position: self, uci: response_move.uci, san: response_move.san)
-      MoveCount.create(value: response_move.count, move: move)
+      p "Move found: #{response_move.san}"
+      p "Move found: #{response_move.san}"
+      p "Move found: #{response_move.san}"
+      p "Move found: #{response_move.san}"
+      p "Move found: #{response_move.san}"
+      p "Move found: #{response_move.san}"
+      p "Move found: #{response_move.san}"
+      Move.find_or_create_by(position: self, uci: response_move.uci, san: response_move.san, count: response_move.count)
     end
+    save
   end
 end
