@@ -1,9 +1,17 @@
 <h1>Repertoires</h1>
 
-<% @repertoires.each do |repertoire| %>
-  <div>
-    <%= link_to repertoire.name, repertoire_path(repertoire) %> - <%= repertoire.white? ? 'white' : 'black' %>
-  </div>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Color</th>
+    <th>Size</th>
+  </tr>
+  <% @repertoires.each do |repertoire| %>
+  <tr>
+    <td><%= link_to repertoire.name, repertoire_path(repertoire) %></td>
+    <td><%= repertoire.white? ? 'white' : 'black' %></td>
+    <td><%= repertoire.moves.size %> </td>
+  </tr>
 <% end %>
 
 <%= link_to 'New', new_repertoire_path %>

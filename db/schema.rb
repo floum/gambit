@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_153631) do
     t.datetime "updated_at", null: false
     t.string "uci"
     t.string "san"
-    t.integer "result_id"
+    t.integer "result_id", null: true
     t.integer "count"
     t.index ["position_id"], name: "index_moves_on_position_id"
     t.index ["result_id"], name: "index_moves_on_result_id"
