@@ -1,5 +1,5 @@
 class Repertoire < ApplicationRecord
-  has_many :repertoire_positions
+  has_many :repertoire_positions, dependent: :destroy
   has_many :positions, through: :repertoire_positions
   has_many :repertoire_moves, through: :repertoire_positions
   has_many :moves, through: :repertoire_moves

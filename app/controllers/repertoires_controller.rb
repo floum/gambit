@@ -15,6 +15,13 @@ class RepertoiresController < ApplicationController
     @repertoire = Repertoire.find(params[:id])
   end
 
+  def destroy
+    @repertoire = Repertoire.find(params[:id])
+    @repertoire.destroy
+
+    redirect_to repertoires_path
+  end
+
   def create
     @repertoire = Repertoire.new(repertoire_params)
     if @repertoire.save

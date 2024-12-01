@@ -12,7 +12,7 @@ class Stockfish
       write.puts("position fen #{fen} moves #{move}")
       write.puts("d")
       while line = master.gets
-        return line.strip[5..] if line[/Fen/]
+        return line.strip[5..].split(' ')[0..3].join(' ') if line[/Fen/]
       end
     end
   end

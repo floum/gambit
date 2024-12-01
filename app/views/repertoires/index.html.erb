@@ -5,12 +5,14 @@
     <th>Name</th>
     <th>Color</th>
     <th>Size</th>
+    <th></th>
   </tr>
   <% @repertoires.each do |repertoire| %>
   <tr>
     <td><%= link_to repertoire.name, repertoire_path(repertoire) %></td>
     <td><%= repertoire.white? ? 'white' : 'black' %></td>
     <td><%= repertoire.moves.size %> </td>
+    <td><%= button_to 'Destroy', repertoire_path(repertoire), method: :delete %>
   </tr>
 <% end %>
 
