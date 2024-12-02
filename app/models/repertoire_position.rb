@@ -6,4 +6,10 @@ class RepertoirePosition < ApplicationRecord
   delegate :count, to: :position, prefix: false
   delegate :fen, to: :position, prefix: false
   delegate :moves, to: :position, prefix: false
+
+  before_save :compute_odds
+
+  def compute_odds
+    return 1 if fen == Position::START
+  end
 end
