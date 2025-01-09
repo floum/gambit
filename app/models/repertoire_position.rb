@@ -7,6 +7,8 @@ class RepertoirePosition < ApplicationRecord
   delegate :fen, to: :position, prefix: false
   delegate :moves, to: :position, prefix: false
 
+  validates_uniqueness_of :position, scope: :repertoire
+
   before_save :compute_odds
 
   def compute_odds

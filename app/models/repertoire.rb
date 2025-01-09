@@ -7,6 +7,11 @@ class Repertoire < ApplicationRecord
   delegate :count, to: :position, prefix: false
 
   before_create :create_initial_positions
+  after_initialize :set_defaults
+
+  def set_defaults
+    self.precision ||= 40
+  end
 
   def main_hole
     repertoire_positions.select do |repertoire_position|
