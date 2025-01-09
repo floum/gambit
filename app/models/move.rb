@@ -4,7 +4,7 @@ class Move < ApplicationRecord
 
   delegate :fen, to: :position, prefix: false
 
-  def odds
+  def popularity
     count.to_f / position.count
   end
 
