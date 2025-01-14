@@ -5,7 +5,6 @@ class Position < ApplicationRecord
   START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -"
 
   before_save :remove_move_count
-  after_create :update_from_lichess_explorer
 
   def self.starting_position
     Position.find_or_create_by(fen: START)

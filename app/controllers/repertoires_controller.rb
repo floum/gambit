@@ -29,6 +29,11 @@ class RepertoiresController < ApplicationController
     end
   end
 
+  def update
+    @repertoire = Repertoire.find(params[:id])
+    p params
+  end
+
   private
 
   def repertoire_params

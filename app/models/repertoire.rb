@@ -6,11 +6,8 @@ class Repertoire < ApplicationRecord
 
   delegate :count, to: :position, prefix: false
 
-  before_create :create_initial_positions
-  after_initialize :set_defaults
-
-  def set_defaults
-    self.precision ||= 40
+  def color
+    white? ? 'white' : 'black'
   end
 
   def main_hole

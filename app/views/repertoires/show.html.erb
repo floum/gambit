@@ -1,33 +1,44 @@
 Repertoire : <%= @repertoire.name %>
-Position Count: <%= @repertoire.main_hole.position.count %>
-Popularity: <%= @repertoire.main_hole.position.count / Position.starting_position.count.to_f * 100 %> %
 
-<div class="row">
-  <div class="col-8">
+<div class="row text-center">
     <div id="chessboard" class="blue merida"></div>
-  </div>
-
-  <div class="col-4">
-  <% @repertoire.main_hole.moves.each do |move| %>
-    <%= form_for RepertoireMove.new, class: 'form-inline' do  |f| %>
-      <%= f.hidden_field :move_id, value: move.id %>
-      <%= f.hidden_field :repertoire_position_id, value: @repertoire.main_hole.id %>
-      <%= f.button move.san %>
-    <% end %>
-  <% end %>
-  </div>
-  <%= form_for @repertoire.main_hole, method: :delete do |f| %>
-    <%= f.submit 'Remove from Repertoire' %>
-<% end %>
 </div>
 
+<br />
+<div class="text-center">
+  <%= button_tag 'Add To Repertoire', id: 'submit' %>
+</div>
 
 <script type="module">
 
-  import { Chessground } from 'chessground'
-let board = document.getElementById('chessboard')
+import { Chessground } from 'chessground'
+import { Chess } from 'chess.js'
 
-Chessground(board, {
-fen: "<%= @repertoire.main_hole.fen %>"
+let game = new Chess();
+
+var board = Chessground(document.getElementById('chessboard'), {
+  orientation: '<%= @repertoire.color %>',
+  movable: {
+    events: {
+      after: (orig, dest, metadata) => {
+        try {
+          game.move({from: orig, to: dest})
+        } catch (error) {
+          board.set({
+            fen: game.fen()
+          })
+        }
+      }
+    }
+  }
 })
+
+function go() {
+  let history = game.history({verbose: true})
+  board.set({
+    fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+  })
+  game.load('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+}
+document.getElementById('submit').addEventListener('click', go)
 </script>
