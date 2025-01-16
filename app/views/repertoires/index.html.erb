@@ -8,22 +8,29 @@
     <th></th>
   </tr>
   <% @repertoires.each do |repertoire| %>
-  <tr>
-    <td><%= link_to repertoire.name, repertoire_path(repertoire) %></td>
-    <td><%= repertoire.white? ? 'white' : 'black' %></td>
-    <td><%= repertoire.moves.size %> </td>
-    <td><%= button_to 'Destroy', repertoire_path(repertoire), method: :delete %>
-  </tr>
-<% end %>
-
-<%= link_to 'New', new_repertoire_path %>
+    <tr>
+      <td><%= link_to repertoire.name, repertoire_path(repertoire) %></td>
+      <td><%= repertoire.color %></td>
+      <td><%= repertoire.moves.size %> </td>
+      <td><%= button_to 'Destroy', repertoire_path(repertoire), method: :delete, class: "btn btn-primary" %>
+    </tr>
+  <% end %>
+</table>
 
 <h2>New Repertoire</h2>
 
 <%= form_for Repertoire.new do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  <%= f.label :white %>
-  <%= f.check_box :white %>
-  <%= f.submit %>
+  <div class="form-row">
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="form-group">
+      <%= f.label :white %>
+      <%= f.check_box :white %>
+    </div>
+    <div class="form-group">
+      <%= f.submit 'Create', class: "btn btn-primary"  %>
+    </div>
+  </div>
 <% end %>
