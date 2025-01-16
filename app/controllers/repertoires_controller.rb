@@ -36,12 +36,15 @@ class RepertoiresController < ApplicationController
 
     line.select do |move|
       move["color"] == @repertoire.color[0]
-    end.each do |move|
-      from = Position.find_or_create_by(fen: move["before"])
-      to = Position.find_or_create_by(fen: move["after"])
-      move = Move.create(position: from, result: to, uci: move["lan"], san: move["san"])
-      repertoire_position = RepertoirePosition.create(repertoire: @repertoire, position: from)
-      RepertoireMove.create(repertoire_position: repertoire_position, move: move)
+    end.each do |move_info|
+      move = Move.find_or_create_by(
+        after: move_info["after"],
+        before: move_info["before"],
+        san: move_info["san"],
+        uci: move_info["lan"]
+      )
+      rm = RepertoireMove.create(move: move, repertoire: @repertoire)
+      p rm.errors
     end
   end
 

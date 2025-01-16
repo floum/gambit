@@ -10,58 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_14_104256) do
-  create_table "move_counts", force: :cascade do |t|
-    t.integer "move_id", null: false
-    t.integer "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["move_id"], name: "index_move_counts_on_move_id"
-  end
-
+ActiveRecord::Schema[7.2].define(version: 2025_01_16_104951) do
   create_table "moves", force: :cascade do |t|
-    t.integer "position_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uci"
     t.string "san"
-    t.integer "result_id"
-    t.integer "count"
-    t.index ["position_id"], name: "index_moves_on_position_id"
-    t.index ["result_id"], name: "index_moves_on_result_id"
-  end
-
-  create_table "position_counts", force: :cascade do |t|
-    t.integer "position_id", null: false
-    t.integer "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["position_id"], name: "index_position_counts_on_position_id"
-  end
-
-  create_table "positions", force: :cascade do |t|
-    t.string "fen"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "count"
+    t.string "before"
+    t.string "after"
   end
 
   create_table "repertoire_moves", force: :cascade do |t|
     t.integer "move_id", null: false
-    t.integer "repertoire_position_id", null: false
+    t.integer "repertoire_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["move_id"], name: "index_repertoire_moves_on_move_id"
-    t.index ["repertoire_position_id"], name: "index_repertoire_moves_on_repertoire_position_id"
-  end
-
-  create_table "repertoire_positions", force: :cascade do |t|
-    t.integer "repertoire_id", null: false
-    t.integer "position_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["position_id"], name: "index_repertoire_positions_on_position_id"
-    t.index ["repertoire_id"], name: "index_repertoire_positions_on_repertoire_id"
+    t.index ["repertoire_id"], name: "index_repertoire_moves_on_repertoire_id"
   end
 
   create_table "repertoires", force: :cascade do |t|
@@ -71,12 +36,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_14_104256) do
     t.boolean "white"
   end
 
-  add_foreign_key "move_counts", "moves"
-  add_foreign_key "moves", "positions"
-  add_foreign_key "moves", "positions", column: "result_id"
-  add_foreign_key "position_counts", "positions"
   add_foreign_key "repertoire_moves", "moves"
-  add_foreign_key "repertoire_moves", "repertoire_positions"
-  add_foreign_key "repertoire_positions", "positions"
-  add_foreign_key "repertoire_positions", "repertoires"
+  add_foreign_key "repertoire_moves", "repertoires"
 end

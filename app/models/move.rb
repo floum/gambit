@@ -1,9 +1,4 @@
 class Move < ApplicationRecord
-  belongs_to :position
-  belongs_to :result, class_name: "Position", optional: true
-
-  delegate :fen, to: :position, prefix: false
-
   def popularity
     count.to_f / position.count
   end
