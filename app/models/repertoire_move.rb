@@ -6,8 +6,6 @@ class RepertoireMove < ApplicationRecord
   delegate :fen, to: :repertoire_position, prefix: false
   delegate :resulting_position, to: :move, prefix: false
 
-  after_create :prepare_repertoire_positions
-
   def prepare_repertoire_positions
     resulting_position.update_from_lichess_explorer
     resulting_position.moves.each do |move|

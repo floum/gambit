@@ -31,7 +31,18 @@ class RepertoiresController < ApplicationController
 
   def update
     @repertoire = Repertoire.find(params[:id])
-    p params
+    
+    line = params[:line]
+
+    line.select do |move|
+      move["color"] == @repertoire.color[0]
+    end.each do |move|
+      from = Position.find_or_create_by(fen: move["before"])
+      to = Position.find_or_create_by(fen: move["after"])
+      move = Move.create(position: from, result: to, uci: move["lan"], san: move["san"])
+      repertoire_position = RepertoirePosition.create(repertoire: @repertoire, position: from)
+      RepertoireMove.create(repertoire_position: repertoire_position, move: move)
+    end
   end
 
   private
