@@ -1,14 +1,16 @@
 <h1>Repertoires</h1>
 
-<table>
+<table class="table">
   <tr>
-    <th>Name</th>
-    <th>Color</th>
-    <th>Size</th>
-    <th></th>
+    <th scope="col">#</th>
+    <th scope="col">Name</th>
+    <th scope="col">Color</th>
+    <th scope="col">Size</th>
+    <th scope="col"></th>
   </tr>
   <% @repertoires.each do |repertoire| %>
     <tr>
+      <th scope="row"><%= link_to repertoire.id, repertoire_path(repertoire) %></th>
       <td><%= link_to repertoire.name, repertoire_path(repertoire) %></td>
       <td><%= repertoire.color %></td>
       <td><%= repertoire.moves.size %> </td>
