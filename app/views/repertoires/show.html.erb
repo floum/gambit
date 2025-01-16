@@ -6,7 +6,8 @@
 
 <br />
 <div class="text-center">
-  <%= button_tag 'Add To Repertoire', id: 'submit' %>
+  <%= button_tag 'Add To Repertoire', id: 'submit', class: 'btn btn-primary' %>
+  <%= button_tag 'Reset Board', id: 'reset', class: 'btn btn-primary' %>
 </div>
 
 <script type="module">
@@ -33,6 +34,13 @@ var board = Chessground(document.getElementById('chessboard'), {
   }
 })
 
+function resetBoard() {
+  board.set({
+    fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+  })
+  game.load('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+}
+
 function addLineToRepertoire() {
   const csrfToken = document.querySelector("[name='csrf-token']").content
   let history = game.history({verbose: true})
@@ -51,4 +59,5 @@ function addLineToRepertoire() {
 }
 
 document.getElementById('submit').addEventListener('click', addLineToRepertoire)
+document.getElementById('reset').addEventListener('click', resetBoard)
 </script>
