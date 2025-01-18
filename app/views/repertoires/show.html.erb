@@ -1,0 +1,22 @@
+<%= @repertoire.name %>
+
+<div class="row">
+<% @repertoire.moves.each do |move| %>
+  <div class="col-4 text-center">
+    <div id="chessboard-<%= move.id %>" class="blue merida"></div>
+    <br />
+    <%= move.uci %>
+  </div>
+<% end %>
+</div>
+
+<script type="module">
+
+import { Chessground } from 'chessground'
+
+<% @repertoire.moves.each do |move| %>
+  Chessground(document.getElementById('chessboard-<%= move.id %>'), {
+    fen: '<%= move.before %>'
+  });
+<% end %>
+</script>
