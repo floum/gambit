@@ -14,7 +14,10 @@
       <td><%= link_to repertoire.name, repertoire_path(repertoire) %></td>
       <td><%= repertoire.color %></td>
       <td><%= repertoire.moves.size %> </td>
-      <td><%= button_to 'Destroy', repertoire_path(repertoire), method: :delete, class: "btn btn-primary" %>
+      <td>
+        <%= button_to 'Destroy', repertoire_path(repertoire), method: :delete, class: "btn btn-primary" %>
+        <%= link_to 'Edit', edit_repertoire_path(repertoire), class: 'btn btn-primary' %>
+      </td>
     </tr>
   <% end %>
 </table>
