@@ -1,0 +1,35 @@
+<%= @repertoire.name %>
+
+<div class="row text-center">
+  <div class="col-6 offset-3">
+    <div class="blue merida" id="chessboard"></div>
+  </div>
+</div>
+
+<script type="module">
+
+import { Chessground } from 'chessground'
+import { Chess } from 'chess.js'
+
+let moves = <%= raw @repertoire.moves.to_json %>
+let index = 0;
+
+console.log(moves);
+
+let game = new Chess();
+
+var board = Chessground(document.getElementById('chessboard'), {
+  orientation: '<%= @repertoire.color %>',
+  fen: moves[index]["before"],
+  movable: {
+    events: {
+      after: (orig, dest, metadata) => {
+        index += 1;
+        board.set({
+          fen: moves[index % moves.length]["before"]
+        })
+      }
+    }
+  }
+})
+</script>

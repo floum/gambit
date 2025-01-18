@@ -48,6 +48,10 @@ class RepertoiresController < ApplicationController
     end
   end
 
+  def train
+    @repertoire = Repertoire.find(params[:id])
+  end
+
   private
 
   def repertoire_params
