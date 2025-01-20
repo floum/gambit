@@ -14,8 +14,6 @@ import { Chess } from 'chess.js'
 let moves = <%= raw @repertoire.moves.to_json %>
 let index = 0;
 
-console.log(moves);
-
 let game = new Chess();
 
 var board = Chessground(document.getElementById('chessboard'), {

@@ -5,7 +5,8 @@
   <div class="col-4 text-center">
     <div id="chessboard-<%= move.id %>" class="blue merida"></div>
     <br />
-    <%= move.uci %>
+    <%= move.sheet_notation %>
+    <%= link_to 'Edit', edit_repertoire_path(@repertoire, from: move.after) %>
   </div>
 <% end %>
 </div>
@@ -16,6 +17,7 @@ import { Chessground } from 'chessground'
 
 <% @repertoire.moves.each do |move| %>
   Chessground(document.getElementById('chessboard-<%= move.id %>'), {
+    orientation: '<%= @repertoire.color %>',
     fen: '<%= move.before %>'
   });
 <% end %>

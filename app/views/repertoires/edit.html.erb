@@ -17,10 +17,13 @@
 import { Chessground } from 'chessground'
 import { Chess } from 'chess.js'
 
-let game = new Chess();
+let initial_fen = '<%= params[:from] || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" %>';
+
+let game = new Chess(initial_fen);
 
 var board = Chessground(document.getElementById('chessboard'), {
   orientation: '<%= @repertoire.color %>',
+  fen: initial_fen,
   movable: {
     events: {
       after: (orig, dest, metadata) => {
