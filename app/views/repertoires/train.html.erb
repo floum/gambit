@@ -1,7 +1,7 @@
-<%= @repertoire.name %>
+<h2><%= @repertoire.name %></h2>
 
 <div class="row text-center">
-  <div class="col-6 offset-3">
+  <div class="col-6 offset-3" id="chessboard-wrapper">
     <div class="blue merida" id="chessboard"></div>
   </div>
 </div>
@@ -24,12 +24,34 @@ var board = Chessground(document.getElementById('chessboard'), {
   movable: {
     events: {
       after: (orig, dest, metadata) => {
-        index += 1;
+        if (orig + dest == moves[index]["uci"]) {
+          success()
+          index += 1;
+          index = index % moves.length;
+        } else {
+          failure()
+        }
         board.set({
-          fen: moves[index % moves.length]["before"]
+          fen: moves[index]["before"]
         })
       }
     }
   }
 })
+
+function success() {
+  let target = document.getElementById('chessboard-wrapper');
+  target.style.backgroundColor = "green";
+  setTimeout(() => {
+    target.style.backgroundColor = "";
+  }, 300)
+}
+
+function failure() {
+  let target = document.getElementById('chessboard-wrapper');
+  target.style.backgroundColor = "red";
+  setTimeout(() => {
+    target.style.backgroundColor = "";
+  }, 300)
+}
 </script>
