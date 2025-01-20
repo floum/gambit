@@ -8,7 +8,6 @@
     <th scope="col">Size</th>
     <th scope="col"></th>
     <th scope="col"></th>
-    <th scope="col"></th>
   </tr>
   <% @repertoires.each do |repertoire| %>
     <tr>
@@ -20,9 +19,6 @@
         <%= link_to train_repertoire_path(repertoire), class: 'btn btn-primary' do %>
           <i class="bi-person-walking"></i>
         <% end %>
-      </td>
-      <td>
-        <%= button_to 'Destroy', repertoire_path(repertoire), class: 'disabled' %>
       </td>
       <td>
         <%= link_to edit_repertoire_path(repertoire), class: 'btn btn-primary' do %>
