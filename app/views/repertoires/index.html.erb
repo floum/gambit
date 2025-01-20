@@ -7,6 +7,7 @@
     <th scope="col">Color</th>
     <th scope="col">Size</th>
     <th scope="col"></th>
+    <th scope="col"></th>
   </tr>
   <% @repertoires.each do |repertoire| %>
     <tr>
@@ -20,6 +21,11 @@
         <% end %>
         <%= link_to edit_repertoire_path(repertoire), class: 'btn btn-primary' do %>
           <i class="bi-pencil"></i>
+        <% end %>
+      </td>
+        <td>
+        <%= link_to repertoire_path(repertoire), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' do %>
+          <i class="bi-trash3"></i>
         <% end %>
       </td>
     </tr>
