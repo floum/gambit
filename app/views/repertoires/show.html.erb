@@ -1,13 +1,16 @@
 <h2 class="text-center">Repertoire: <%= @repertoire.name %></h2>
 
 <div class="row">
-<% @repertoire.moves.each do |move| %>
+<% @repertoire.repertoire_moves.each do |move| %>
   <div class="col-4 text-center">
     <div id="chessboard-<%= move.id %>" class="blue merida"></div>
     <br />
     <%= move.sheet_notation %>
     <%= link_to edit_repertoire_path(@repertoire, from: move.after), class: 'btn btn-primary' do %>
       <i class="bi-pencil"></i>
+    <% end %>
+    <%= link_to repertoire_move_path(move), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' do %>
+      <i class="bi-trash3"></i>
     <% end %>
   </div>
 <% end %>
@@ -17,7 +20,7 @@
 
 import { Chessground } from 'chessground'
 
-<% @repertoire.moves.each do |move| %>
+<% @repertoire.repertoire_moves.each do |move| %>
   Chessground(document.getElementById('chessboard-<%= move.id %>'), {
     orientation: '<%= @repertoire.color %>',
     fen: '<%= move.before %>'
