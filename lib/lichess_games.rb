@@ -1,5 +1,5 @@
-require 'httparty'
-require 'debug'
+require "httparty"
+require "debug"
 
 module Lichess
   class Player
@@ -11,18 +11,18 @@ module Lichess
   class Game
     attr_reader :clocks
 
-    def self.parse(json, options={})
+    def self.parse(json, options = {})
       data = JSON.parse(json)
-      clocks = data['clocks']
+      clocks = data["clocks"]
       binding.break
-      Game.new(clocks: clocks, increment: data['clock']['increment'] * 100)
+      Game.new(clocks: clocks, increment: data["clock"]["increment"] * 100)
     end
-    
+
     def initialize(attrs = {})
       @clocks = attrs.fetch(:clocks, [])
       @increment = attrs.fetch(:increment, 0)
     end
-    
+
     def white_clocks
       @clocks.each_slice(2).map(&:first)
     end
@@ -46,10 +46,10 @@ class LichessGames
 
   ENDPOINT = "https://lichess.org/game/export/"
 
-  def self.fetch(game_id, options={})
+  def self.fetch(game_id, options = {})
     response = HTTParty.get(
       ENDPOINT << game_id,
-      headers: { 'Accept' => 'application/json' }
+      headers: { "Accept" => "application/json" }
     )
 
     Lichess::Game.parse(response.body, options)

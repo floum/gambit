@@ -11,9 +11,9 @@ class LichessExplorerMove
 
   def self.parse(response)
     move = LichessExplorerMove.new
-    move.count = response['white'] + response['draws'] + response['black']
-    move.san = response['san']
-    move.uci = response['uci']
+    move.count = response["white"] + response["draws"] + response["black"]
+    move.san = response["san"]
+    move.uci = response["uci"]
     move
   end
 end
@@ -28,8 +28,8 @@ class LichessExplorerResponse
 
   def self.parse(response)
     lichess_explorer_response = LichessExplorerResponse.new
-    lichess_explorer_response.count = response['white'] + response['draws'] + response['black']
-    response['moves'].each do |move|
+    lichess_explorer_response.count = response["white"] + response["draws"] + response["black"]
+    response["moves"].each do |move|
       lichess_explorer_response.moves << LichessExplorerMove.parse(move)
     end
 
@@ -56,4 +56,3 @@ class LichessExplorer
     LichessExplorerResponse.parse(response.parsed_response)
   end
 end
-

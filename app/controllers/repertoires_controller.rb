@@ -31,7 +31,7 @@ class RepertoiresController < ApplicationController
 
   def update
     @repertoire = Repertoire.find(params[:id])
-    
+
     line = params[:line]
 
     line.select do |move|

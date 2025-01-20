@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
   resources :repertoires do
     collection do
-      post :import, to: 'repertoires#import'
+      post :import, to: "repertoires#import"
     end
     member do
       get :train
       get :export
     end
   end
-  resources :repertoire_moves, only: [:destroy]
+  resources :repertoire_moves, only: [ :destroy ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

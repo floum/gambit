@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2"
-gem 'httparty'
+gem "httparty"
 gem "sassc-rails"
 gem "bootstrap"
 
@@ -46,7 +46,7 @@ group :development, :test do
   gem "brakeman", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem 'rspec-rails'
+  gem "rspec-rails"
   gem "rubocop-rails-omakase", require: false
 end
 

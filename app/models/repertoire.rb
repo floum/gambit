@@ -8,10 +8,10 @@ class Repertoire < ApplicationRecord
     repertoire.name = json_data["name"]
     json_data["moves"].each do |move_info|
       move = Move.find_or_create_by(
-        before: move_info['before'],
-        after: move_info['after'],
-        uci: move_info['uci'],
-        san: move_info['san']
+        before: move_info["before"],
+        after: move_info["after"],
+        uci: move_info["uci"],
+        san: move_info["san"]
       )
       repertoire.repertoire_moves << RepertoireMove.new(move:)
     end
@@ -19,7 +19,7 @@ class Repertoire < ApplicationRecord
   end
 
   def color
-    white? ? 'white' : 'black'
+    white? ? "white" : "black"
   end
 
   def size

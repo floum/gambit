@@ -4,10 +4,10 @@ class Move < ApplicationRecord
   end
 
   def number
-    before.split(' ').last
+    before.split(" ").last
   end
 
   def color
-    before.split(' ')[1]
+    before.split(" ")[1]
   end
 end
