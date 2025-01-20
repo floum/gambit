@@ -17,13 +17,17 @@
       <td><%= repertoire.color %></td>
       <td><%= repertoire.moves.size %> </td>
       <td>
-        <%= link_to 'Train', train_repertoire_path(repertoire), class: 'btn btn-primary' %>
+        <%= link_to train_repertoire_path(repertoire), class: 'btn btn-primary' do %>
+          <i class="bi-person-walking"></i>
+        <% end %>
       </td>
       <td>
-        <%= button_to 'Destroy', repertoire_path(repertoire), method: :delete, class: "btn btn-primary disabled" %>
+        <%= button_to 'Destroy', repertoire_path(repertoire), class: 'disabled' %>
       </td>
       <td>
-        <%= link_to 'Edit', edit_repertoire_path(repertoire), class: 'btn btn-primary' %>
+        <%= link_to edit_repertoire_path(repertoire), class: 'btn btn-primary' do %>
+          <i class="bi-pencil"></i>
+        <% end %>
       </td>
     </tr>
   <% end %>

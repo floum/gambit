@@ -1,13 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Repertoire do
-  it 'cannot save twice a RepertoirePosition from the same position' do
-    pos = Position.create(fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
-    rep = Repertoire.create()
+  it 'cannot have two moves from the same position' do
+    r = Repertoire.new
+    move = Move.new(before: 'abcde', uci: 'e2e4')
+    alt_move = Move.new(before: 'abcde', uci: 'd2d4')
 
-    RepertoirePosition.create(repertoire: rep, position: pos)
+    r.repertoire_moves << RepertoireMove.new(move: move)
+    expect(r.save).to be_truthy
 
-    rep_pos = RepertoirePosition.create(repertoire: rep, position: pos)
-    expect(rep_pos.save).to be_falsey
+    r.repertoire_moves << RepertoireMove.new(move: alt_move)
+
+    debugger
+    expect(r.save).not_to be_truthy
   end
 end
