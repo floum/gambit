@@ -27,11 +27,16 @@
         <%= link_to repertoire_path(repertoire), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' do %>
           <i class="bi-trash3"></i>
         <% end %>
+        <%= link_to export_repertoire_path(repertoire), class: 'btn btn-primary' do %>
+          <i class="bi-save2"></i>
+        <% end %>
       </td>
     </tr>
   <% end %>
 </table>
 
+<div class="row">
+  <div class="col-6">
 <h2>New Repertoire</h2>
 
 <%= form_for Repertoire.new do |f| %>
@@ -49,3 +54,12 @@
     </div>
   </div>
 <% end %>
+  </div>
+  <div class="col-6">
+    <h2>Import</h2>
+  <%= form_with url: '/repertoires/import' do |f| %>
+    <%= f.file_field :json_file %>
+    <%= f.submit %>
+  <% end %>
+  </div>
+</div>
