@@ -5,4 +5,8 @@ class Repertoire < ApplicationRecord
   def color
     white? ? 'white' : 'black'
   end
+
+  def size
+    moves.size
+  end
 end

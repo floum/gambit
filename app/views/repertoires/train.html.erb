@@ -6,6 +6,12 @@
   </div>
 </div>
 
+<br />
+
+<div class="row text-center">
+  <progress class="col-6 offset-3" id="progress" max="<%= @repertoire.size %>" value="0"></progress>
+</div>
+
 <script type="module">
 
 import { Chessground } from 'chessground'
@@ -26,6 +32,7 @@ var board = Chessground(document.getElementById('chessboard'), {
           success()
           index += 1;
           index = index % moves.length;
+          updateProgress(index)
         } else {
           failure()
         }
@@ -51,5 +58,9 @@ function failure() {
   setTimeout(() => {
     target.style.backgroundColor = "";
   }, 300)
+}
+
+function updateProgress(index) {
+  document.getElementById('progress').value = index;
 }
 </script>
