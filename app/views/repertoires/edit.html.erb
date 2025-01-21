@@ -8,6 +8,9 @@
 
 <br />
 <div class="text-center">
+  <div id="current-fen"></div>
+</div>
+<div class="text-center">
   <%= button_tag 'Add To Repertoire', id: 'submit', class: 'btn btn-primary' %>
   <%= button_tag 'Reset Board', id: 'reset', class: 'btn btn-primary' %>
 </div>
@@ -17,9 +20,10 @@
 import { Chessground } from 'chessground'
 import { Chess } from 'chess.js'
 
-let initial_fen = '<%= params[:from] || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" %>';
+let initial_fen = '<%= params[:from] || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" %>'
 
-let game = new Chess(initial_fen);
+let game = new Chess(initial_fen)
+setCurrentFen(initial_fen)
 
 var board = Chessground(document.getElementById('chessboard'), {
   orientation: '<%= @repertoire.color %>',
@@ -29,6 +33,7 @@ var board = Chessground(document.getElementById('chessboard'), {
       after: (orig, dest, metadata) => {
         try {
           game.move({from: orig, to: dest})
+          setCurrentFen(game.fen())
         } catch (error) {
           board.set({
             fen: game.fen()
@@ -61,6 +66,10 @@ function addLineToRepertoire() {
     "Content-type": "application/json"
     }
   }).then((response) => console.log(response))
+}
+
+function setCurrentFen(fen) {
+  document.getElementById('current-fen').innerHTML = fen
 }
 
 document.getElementById('submit').addEventListener('click', addLineToRepertoire)
