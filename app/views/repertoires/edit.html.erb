@@ -20,6 +20,7 @@
 import { Chessground } from 'chessground'
 import { Chess } from 'chess.js'
 
+const starting_fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 let initial_fen = '<%= params[:from] || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" %>'
 
 let game = new Chess(initial_fen)
@@ -46,18 +47,16 @@ var board = Chessground(document.getElementById('chessboard'), {
 
 function resetBoard() {
   board.set({
-    fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+    fen: starting_fen
   })
-  game.load('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+  game.load(starting_fen)
+  setCurrentFen(starting_fen)
 }
 
 function addLineToRepertoire() {
   const csrfToken = document.querySelector("[name='csrf-token']").content
   let history = game.history({verbose: true})
-  board.set({
-    fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-  })
-  game.load('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+  resetBoard()
 
   fetch('/repertoires/<%= @repertoire.id %>', { method: 'PUT',
   body: JSON.stringify({ "line": history }),
