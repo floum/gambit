@@ -7,4 +7,8 @@ class RepertoireMovesController < ApplicationController
 
     redirect_to repertoire_path(@repertoire)
   end
+
+  def attempt
+    @repertoire_move = RepertoireMove.find(params[:id])
+  end
 end

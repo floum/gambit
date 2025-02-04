@@ -4,6 +4,8 @@ class RepertoireMove < ApplicationRecord
 
   delegate :before, to: :move, prefix: false
   delegate :after, to: :move, prefix: false
+  delegate :san, to: :move, prefix: false
+  delegate :uci, to: :move, prefix: false
   delegate :sheet_notation, to: :move, prefix: false
 
   validates_with RepertoireMoveValidator

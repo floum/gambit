@@ -17,7 +17,7 @@
 import { Chessground } from 'chessground'
 import { Chess } from 'chess.js'
 
-let moves = <%= raw @repertoire.moves.to_json %>
+let moves = <%= raw(@repertoire.repertoire_moves.to_json methods: [:uci, :before]) %>
 let index = 0;
 
 let game = new Chess(moves[index]["before"]);
@@ -36,7 +36,7 @@ function onMove(orig, dest, metadata) {
   try {
     let initial_fen = game.fen()
     let move = game.move(orig+dest)
-    reportMove(move)
+    reportMove(moves[index], move)
     if (orig + dest == moves[index]["uci"]) {
       success()
       index += 1;
@@ -75,9 +75,11 @@ function failure() {
   }, 300)
 }
 
-function reportMove(move) {
+function reportMove(repertoireMove, move) {
   console.log('reportingMove')
-  fetch(window.location.href, {
+  console.log(repertoireMove)
+  console.log(move)
+  fetch('/repertoire_moves/' + repertoireMove["id"], {
     method: 'post',
     body: JSON.stringify({
       san: move.san,
