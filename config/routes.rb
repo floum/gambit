@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     end
     member do
       get :train
+      post :train, to: "repertoires#attempt"
       get :export
     end
   end

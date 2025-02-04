@@ -62,6 +62,10 @@ class RepertoiresController < ApplicationController
     redirect_to repertoires_path
   end
 
+  def attempt
+    p params
+  end
+
   private
 
   def repertoire_params

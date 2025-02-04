@@ -11,7 +11,6 @@ RSpec.describe Repertoire do
 
     r.repertoire_moves << RepertoireMove.new(move: alt_move)
 
-    debugger
     expect(r.save).not_to be_truthy
   end
 end

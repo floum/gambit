@@ -20,29 +20,44 @@ import { Chess } from 'chess.js'
 let moves = <%= raw @repertoire.moves.to_json %>
 let index = 0;
 
-let game = new Chess();
+let game = new Chess(moves[index]["before"]);
 
 var board = Chessground(document.getElementById('chessboard'), {
   orientation: '<%= @repertoire.color %>',
   fen: moves[index]["before"],
   movable: {
     events: {
-      after: (orig, dest, metadata) => {
-        if (orig + dest == moves[index]["uci"]) {
-          success()
-          index += 1;
-          index = index % moves.length;
-          updateProgress(index)
-        } else {
-          failure()
-        }
-        board.set({
-          fen: moves[index]["before"]
-        })
-      }
+      after: onMove
     }
   }
 })
+
+function onMove(orig, dest, metadata) {
+  try {
+    let initial_fen = game.fen()
+    let move = game.move(orig+dest)
+    reportMove(move)
+    if (orig + dest == moves[index]["uci"]) {
+      success()
+      index += 1;
+      index = index % moves.length;
+      updateProgress(index)
+    } else {
+      failure()
+    }
+  } catch {
+    console.log('illegal move')
+  }
+
+  setBoard(moves[index]["before"])
+}
+
+function setBoard(fen) {
+  board.set({
+    fen: fen
+  })
+  game.load(fen)
+}
 
 function success() {
   let target = document.getElementById('chessboard-wrapper');
@@ -58,6 +73,22 @@ function failure() {
   setTimeout(() => {
     target.style.backgroundColor = "";
   }, 300)
+}
+
+function reportMove(move) {
+  console.log('reportingMove')
+  fetch(window.location.href, {
+    method: 'post',
+    body: JSON.stringify({
+      san: move.san,
+      uci: move.lan,
+      before: move.before
+    }),
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": "<%= form_authenticity_token %>"
+    }
+  })
 }
 
 function updateProgress(index) {
