@@ -1,0 +1,99 @@
+<h2 class="text-center"><%= @repertoire.name %></h2>
+
+<div class="row text-center">
+  <div class="col-6 offset-3" id="chessboard-wrapper">
+    <div class="blue merida" id="chessboard"></div>
+  </div>
+</div>
+
+<br />
+
+<div class="row text-center">
+  <progress class="col-6 offset-3" id="progress" max="<%= @repertoire.size %>" value="0"></progress>
+</div>
+
+<script type="module">
+
+import { Chessground } from 'chessground'
+import { Chess } from 'chess.js'
+
+let moves = <%= raw(@repertoire.repertoire_moves.to_json methods: [:uci, :before]) %>
+let index = 0;
+
+let game = new Chess(moves[index]["before"]);
+
+var board = Chessground(document.getElementById('chessboard'), {
+  orientation: '<%= @repertoire.color %>',
+  fen: moves[index]["before"],
+  movable: {
+    events: {
+      after: onMove
+    }
+  }
+})
+
+function onMove(orig, dest, metadata) {
+  try {
+    let initial_fen = game.fen()
+    let move = game.move(orig+dest)
+    reportMove(moves[index], move)
+    if (orig + dest == moves[index]["uci"]) {
+      success()
+      index += 1;
+      index = index % moves.length;
+      updateProgress(index)
+    } else {
+      failure()
+    }
+  } catch {
+    console.log('illegal move')
+  }
+
+  setBoard(moves[index]["before"])
+}
+
+function setBoard(fen) {
+  board.set({
+    fen: fen
+  })
+  game.load(fen)
+}
+
+function success() {
+  let target = document.getElementById('chessboard-wrapper');
+  target.style.backgroundColor = "green";
+  setTimeout(() => {
+    target.style.backgroundColor = "";
+  }, 300)
+}
+
+function failure() {
+  let target = document.getElementById('chessboard-wrapper');
+  target.style.backgroundColor = "red";
+  setTimeout(() => {
+    target.style.backgroundColor = "";
+  }, 300)
+}
+
+function reportMove(repertoireMove, move) {
+  console.log('reportingMove')
+  console.log(repertoireMove)
+  console.log(move)
+  fetch('/repertoire_moves/' + repertoireMove["id"], {
+    method: 'post',
+    body: JSON.stringify({
+      san: move.san,
+      uci: move.lan,
+      before: move.before
+    }),
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": "<%= form_authenticity_token %>"
+    }
+  })
+}
+
+function updateProgress(index) {
+  document.getElementById('progress').value = index;
+}
+</script>

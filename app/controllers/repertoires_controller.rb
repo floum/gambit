@@ -52,6 +52,10 @@ class RepertoiresController < ApplicationController
     @repertoire = Repertoire.find(params[:id])
   end
 
+  def focus
+    @repertoire = Repertoire.find(params[:id])
+  end
+
   def export
     @repertoire = Repertoire.find(params[:id])
     render json: @repertoire, include: :moves

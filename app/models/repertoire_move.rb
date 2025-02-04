@@ -11,4 +11,5 @@ class RepertoireMove < ApplicationRecord
   delegate :sheet_notation, to: :move, prefix: false
 
   validates_with RepertoireMoveValidator
+
 end

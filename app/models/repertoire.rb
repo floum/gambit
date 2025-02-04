@@ -28,6 +28,6 @@ class Repertoire < ApplicationRecord
   end
 
   def success_rate
-    attempts.select(&:success?).size * 100  / attempts.size
+    attempts.select(&:success?).size.to_f  / attempts.size
   end
 end

@@ -16,10 +16,13 @@
       <td><%= link_to repertoire.name, repertoire_path(repertoire) %></td>
       <td><%= repertoire.color %></td>
       <td><%= repertoire.moves.size %> </td>
-      <td><%= repertoire.success_rate %> %</td>
+      <td><%= '%.2f' % (repertoire.success_rate * 100) %> %</td>
       <td>
         <%= link_to train_repertoire_path(repertoire), class: 'btn btn-primary' do %>
           <i class="bi-person-walking"></i>
+        <% end %>
+        <%= link_to focus_repertoire_path(repertoire), class: 'btn btn-primary' do %>
+          <i class="bi-exclamation-triangle"></i>
         <% end %>
         <%= link_to edit_repertoire_path(repertoire), class: 'btn btn-primary' do %>
           <i class="bi-pencil"></i>
