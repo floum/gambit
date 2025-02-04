@@ -1,6 +1,7 @@
 class Repertoire < ApplicationRecord
   has_many :repertoire_moves, dependent: :destroy
   has_many :moves, through: :repertoire_moves
+  has_many :attempts, through: :repertoire_moves
 
   def self.import(json_data)
     repertoire = Repertoire.new
@@ -24,5 +25,9 @@ class Repertoire < ApplicationRecord
 
   def size
     moves.size
+  end
+
+  def success_rate
+    attempts.select(&:success?).size * 100  / attempts.size
   end
 end

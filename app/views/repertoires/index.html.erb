@@ -6,6 +6,7 @@
     <th scope="col">Name</th>
     <th scope="col">Color</th>
     <th scope="col">Size</th>
+    <th scope="col">Success Rate</th>
     <th scope="col"></th>
     <th scope="col"></th>
   </tr>
@@ -15,6 +16,7 @@
       <td><%= link_to repertoire.name, repertoire_path(repertoire) %></td>
       <td><%= repertoire.color %></td>
       <td><%= repertoire.moves.size %> </td>
+      <td><%= repertoire.success_rate %> %</td>
       <td>
         <%= link_to train_repertoire_path(repertoire), class: 'btn btn-primary' do %>
           <i class="bi-person-walking"></i>
