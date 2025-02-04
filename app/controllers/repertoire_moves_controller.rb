@@ -10,5 +10,7 @@ class RepertoireMovesController < ApplicationController
 
   def attempt
     @repertoire_move = RepertoireMove.find(params[:id])
+
+    RepertoireMoveAttempt.create(repertoire_move: @repertoire_move, success: params[:san] == @repertoire_move.san)
   end
 end

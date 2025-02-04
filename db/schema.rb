@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_16_104951) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_04_140517) do
   create_table "moves", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -18,6 +18,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_104951) do
     t.string "san"
     t.string "before"
     t.string "after"
+  end
+
+  create_table "repertoire_move_attempts", force: :cascade do |t|
+    t.boolean "success"
+    t.integer "repertoire_move_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repertoire_move_id"], name: "index_repertoire_move_attempts_on_repertoire_move_id"
   end
 
   create_table "repertoire_moves", force: :cascade do |t|
@@ -36,6 +44,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_104951) do
     t.boolean "white"
   end
 
+  add_foreign_key "repertoire_move_attempts", "repertoire_moves"
   add_foreign_key "repertoire_moves", "moves"
   add_foreign_key "repertoire_moves", "repertoires"
 end
