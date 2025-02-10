@@ -17,7 +17,7 @@
 import { Chessground } from 'chessground'
 import { Chess } from 'chess.js'
 
-let moves = <%= raw(@repertoire.repertoire_moves.to_json methods: [:uci, :before]) %>
+let moves = <%= raw(@repertoire.focus_moves.to_json methods: [:uci, :before]) %>
 let index = 0;
 
 let game = new Chess(moves[index]["before"]);

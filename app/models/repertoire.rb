@@ -30,4 +30,10 @@ class Repertoire < ApplicationRecord
   def success_rate
     attempts.select(&:success?).size.to_f  / attempts.size
   end
+
+  def focus_moves
+    repertoire_moves.select do |rm|
+      rm.success_rate < 0.8
+    end
+  end
 end

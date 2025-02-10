@@ -12,4 +12,11 @@ class RepertoireMove < ApplicationRecord
 
   validates_with RepertoireMoveValidator
 
+  def success_rate
+    self.attempts.select(&:success?).size.to_f / self.attempts.size
+  end
+
+  def last_attempted_at
+    attempts.pluck(:created_at).max
+  end
 end
