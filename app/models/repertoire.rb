@@ -32,8 +32,6 @@ class Repertoire < ApplicationRecord
   end
 
   def focus_moves
-    repertoire_moves.select do |rm|
-      rm.success_rate < 0.8
-    end
+    (repertoire_moves.sort_by(&:success_rate).last(5) + repertoire_moves.select {|rm| rm.last_attempted_at < 3.days.ago}).uniq
   end
 end
