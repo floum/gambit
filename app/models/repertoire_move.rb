@@ -13,10 +13,12 @@ class RepertoireMove < ApplicationRecord
   validates_with RepertoireMoveValidator
 
   def success_rate
+    return 0 if self.attempts.empty?
     self.attempts.select(&:success?).size.to_f / self.attempts.size
   end
 
   def last_attempted_at
+    return 10.years.ago if self.attempts.empty?
     attempts.pluck(:created_at).max
   end
 end
