@@ -12,6 +12,10 @@
   <progress class="col-6 offset-3" id="progress" max="<%= @repertoire.size %>" value="0"></progress>
 </div>
 
+<div class="row text-center">
+  <%= button_tag 'Reveal', class: "col-2 offset-5 btn btn-primary", id: "reveal", onclick: "reveal()" %>
+</div>
+
 <script type="module">
 
 import { Chessground } from 'chessground'
@@ -95,5 +99,19 @@ function reportMove(repertoireMove, move) {
 
 function updateProgress(index) {
   document.getElementById('progress').value = index;
+}
+
+reveal = () => {
+  board.set({
+    drawable: {
+      shapes: [
+        {
+          orig: moves[index]["uci"].slice(0, 2),
+          dest: moves[index]["uci"].slice(2, 4),
+          brush: 'green'
+        }
+      ]
+    }
+  })
 }
 </script>
