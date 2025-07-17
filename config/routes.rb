@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :game_trainings
   resources :repertoires do
     collection do
       post :import, to: "repertoires#import"

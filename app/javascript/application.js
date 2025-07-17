@@ -4,3 +4,7 @@ import "bootstrap"
 import Rails from "@rails/ujs"
 Rails.start()
 
+function parse() {
+  var pgn = document.getElementById('game_training_game_pgn')
+  console.log(pgn)
+}

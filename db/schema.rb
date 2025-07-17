@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_04_140517) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_13_230724) do
+  create_table "game_moves", force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.integer "move_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_moves_on_game_id"
+    t.index ["move_id"], name: "index_game_moves_on_move_id"
+  end
+
+  create_table "game_trainings", force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_trainings_on_game_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "result"
+    t.string "white"
+    t.string "black"
+    t.string "site"
+  end
+
   create_table "moves", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,6 +69,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_140517) do
     t.boolean "white"
   end
 
+  add_foreign_key "game_moves", "games"
+  add_foreign_key "game_moves", "moves"
+  add_foreign_key "game_trainings", "games"
   add_foreign_key "repertoire_move_attempts", "repertoire_moves"
   add_foreign_key "repertoire_moves", "moves"
   add_foreign_key "repertoire_moves", "repertoires"
