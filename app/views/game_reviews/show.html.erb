@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @game_review %>
+
+<div>
+  <%= link_to "Edit this game training", edit_game_review_path(@game_review) %> |
+  <%= link_to "Back to game trainings", game_reviews_path %>
+
+  <%= button_to "Destroy this game training", @game_review, method: :delete %>
+</div>

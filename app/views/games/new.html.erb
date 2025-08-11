@@ -1,0 +1,56 @@
+<h2>New Game</h2>
+
+<%= form_with model: @game, html: { id: 'game-form' } do |f| %>
+  <div>
+  <%= f.label :pgn, 'PGN' %>
+  <%= f.text_area :pgn, rows: 30, cols: 80 %>
+  </div>
+
+  <div>
+    <%= f.label :rewiew_as_white %>
+    <%= f.check_box :review_as_white %>
+  </div>
+
+  <div>
+    <%= f.label :review_size %>
+    <%= f.text_field :review_size %>
+  </div>
+
+  <div>
+  <%= f.submit %>
+  </div>
+<% end %>
+
+<script type="module">
+  import { Chess } from 'chess.js'
+
+  document.getElementById('game-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the default form submission
+
+  const form = event.target;
+  const formData = new FormData(form);
+  
+  var game = new Chess()
+  game.loadPgn(formData.get('game[pgn]'))
+  
+  var headers = game.getHeaders()
+  formData.append('game[white]', headers['White'])
+  formData.append('game[black]', headers['Black'])
+  formData.append('game[result]', headers['Result'])
+  
+  formData.append('game[moves]', JSON.stringify(game.history({ verbose: true})));
+
+  fetch('/games', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    location.assign("/game_reviews")
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+});
+</script>

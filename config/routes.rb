@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :game_trainings
+  resources :games
+  resources :game_reviews
+  resources :game_review_moves, only: [:create]
   resources :repertoires do
     collection do
       post :import, to: "repertoires#import"

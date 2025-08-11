@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_13_230724) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_07_143558) do
   create_table "game_moves", force: :cascade do |t|
     t.integer "game_id", null: false
     t.integer "move_id", null: false
@@ -20,11 +20,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_13_230724) do
     t.index ["move_id"], name: "index_game_moves_on_move_id"
   end
 
-  create_table "game_trainings", force: :cascade do |t|
+  create_table "game_review_moves", force: :cascade do |t|
+    t.integer "game_review_id", null: false
+    t.integer "move_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_review_id"], name: "index_game_review_moves_on_game_review_id"
+    t.index ["move_id"], name: "index_game_review_moves_on_move_id"
+  end
+
+  create_table "game_reviews", force: :cascade do |t|
     t.integer "game_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_game_trainings_on_game_id"
+    t.index ["game_id"], name: "index_game_reviews_on_game_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -34,15 +43,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_13_230724) do
     t.string "white"
     t.string "black"
     t.string "site"
+    t.boolean "review_as_white"
+    t.integer "review_size"
   end
 
   create_table "moves", force: :cascade do |t|
+    t.string "before", null: false
+    t.string "after", null: false
+    t.string "uci", null: false
+    t.string "san", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "uci"
-    t.string "san"
-    t.string "before"
-    t.string "after"
   end
 
   create_table "repertoire_move_attempts", force: :cascade do |t|
@@ -54,25 +65,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_13_230724) do
   end
 
   create_table "repertoire_moves", force: :cascade do |t|
-    t.integer "move_id", null: false
-    t.integer "repertoire_id", null: false
+    t.integer "move_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["move_id"], name: "index_repertoire_moves_on_move_id"
-    t.index ["repertoire_id"], name: "index_repertoire_moves_on_repertoire_id"
+    t.index ["move_id"], name: "index_move_on_move_id"
   end
 
   create_table "repertoires", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "white", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.boolean "white"
   end
 
   add_foreign_key "game_moves", "games"
   add_foreign_key "game_moves", "moves"
-  add_foreign_key "game_trainings", "games"
+  add_foreign_key "game_review_moves", "game_reviews"
+  add_foreign_key "game_review_moves", "moves"
+  add_foreign_key "game_reviews", "games"
   add_foreign_key "repertoire_move_attempts", "repertoire_moves"
-  add_foreign_key "repertoire_moves", "moves"
-  add_foreign_key "repertoire_moves", "repertoires"
 end

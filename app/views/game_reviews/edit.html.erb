@@ -1,0 +1,69 @@
+<% content_for :title, "Editing game training" %>
+
+<h1>Reviewing <%= @game_review.game_name %></h1>
+
+<div class="row text-center">
+  <div class="col-6 offset-3">
+    <div id="chessboard" class="blue merida"></div>
+  </div>
+</div>
+
+<div>
+  <%= link_to "Back to game trainings", game_reviews_path %>
+</div>
+
+<script type="module">
+  import { Chessground } from 'chessground'
+  import { Chess } from 'chess.js'
+
+let game = new Chess()
+let color = '<%= @game_review.color %>'
+let fens = <%= @game_review.fens.to_json.html_safe %>
+let index = 0
+
+let lastMove = function(game) {
+  var history = game.history({ verbose: true })
+  return history[history.length-1]
+}
+
+var board = Chessground(document.getElementById('chessboard'), {
+  orientation: color,
+  fen: fens[index],
+  movable: {
+    events: {
+      after: (orig, dest, metadata) => {
+        try {
+          game.move({ from: orig, to: dest })
+
+          var move = lastMove(game)
+          const csrfToken = '<%= form_authenticity_token %>'
+
+          fetch('/game_review_moves', {
+            method: 'POST',
+            body: JSON.stringify({
+              game_review_move: {
+                game_review_id: <%= @game_review.id %>,
+                move: move
+              }
+            }),
+              headers: {
+              "X-CSRF-Token": csrfToken, 
+              "Content-type": "application/json"
+            }
+          }).then((response) => console.log(response))
+
+          index++
+          board.set({fen: fens[index]})
+          game.load(fens[index])
+        } catch (error) {
+          console.log(error)
+          board.set({
+            fen: game.fen()
+          })
+        }
+      }
+    }
+  }
+})
+
+</script>
