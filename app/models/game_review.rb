@@ -1,7 +1,13 @@
 class GameReview < ApplicationRecord
   belongs_to :game
 
+  has_many :game_review_moves
+
   delegate :moves, to: :game, prefix: false
+
+  def size
+    game.review_size
+  end
 
   def game_name
     game.display_name
@@ -11,11 +17,25 @@ class GameReview < ApplicationRecord
     game.review_as_white ? 'white' : 'black'
   end
 
-  def fens
+  def review_moves
+    moves.select {|move| game.review_as_white ? move.white? : move.black? }
+  end
+
+  def moves_to_review
     moves.select do |move|
-      move.before.split(' ')[1] == color[0]
+      !game_review_moves.map(&:before).include?(move.before)
+    end
+  end
+
+  def fens
+    moves_to_review.select do |move|
+      move.color == color
     end.sort do |move|
-      move.before.split(' ')[5].to_i
+      move.number
     end.map(&:before).reverse
+  end
+
+  def done?
+    size == game_review_moves.size
   end
 end

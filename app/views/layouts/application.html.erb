@@ -19,8 +19,9 @@
 
   <body class="container" data-bs-theme="dark">
     <h1 class="text-center"><%= link_to 'Gambit', root_path %></h1>
-    <%= link_to 'Games', games_path %>
-    <%= link_to 'Reviews', game_reviews_path %>
+    <%= link_to 'Repertoires', repertoires_path, class: 'btn btn-primary' %>
+    <%= link_to 'Games', games_path, class: 'btn btn-primary' %>
+    <%= link_to 'Reviews', game_reviews_path, class: 'btn btn-primary' %>
     <%= yield %>
   </body>
 </html>

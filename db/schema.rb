@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_07_143558) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_11_121212) do
   create_table "game_moves", force: :cascade do |t|
     t.integer "game_id", null: false
     t.integer "move_id", null: false
@@ -47,6 +47,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_07_143558) do
     t.integer "review_size"
   end
 
+  create_table "move_analyses", force: :cascade do |t|
+    t.integer "move_id", null: false
+    t.integer "depth"
+    t.float "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["move_id"], name: "index_move_analyses_on_move_id"
+  end
+
   create_table "moves", force: :cascade do |t|
     t.string "before", null: false
     t.string "after", null: false
@@ -66,9 +75,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_07_143558) do
 
   create_table "repertoire_moves", force: :cascade do |t|
     t.integer "move_id"
+    t.integer "repertoire_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["move_id"], name: "index_move_on_move_id"
+    t.index ["repertoire_id"], name: "index_repertoire_on_repertoire_id"
   end
 
   create_table "repertoires", force: :cascade do |t|
@@ -83,5 +94,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_07_143558) do
   add_foreign_key "game_review_moves", "game_reviews"
   add_foreign_key "game_review_moves", "moves"
   add_foreign_key "game_reviews", "games"
+  add_foreign_key "move_analyses", "moves"
   add_foreign_key "repertoire_move_attempts", "repertoire_moves"
 end

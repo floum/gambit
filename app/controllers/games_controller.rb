@@ -7,6 +7,10 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
+  def show
+    @game = Game.find(params[:id])
+  end
+
   def create
     @game = Game.create(
       white: game_params[:white],

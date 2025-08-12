@@ -1,10 +1,21 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @game_review %>
-
 <div>
-  <%= link_to "Edit this game training", edit_game_review_path(@game_review) %> |
-  <%= link_to "Back to game trainings", game_reviews_path %>
+<% @game_review.review_moves.each do |move| %>
+  <%= move.san %>
+<% end %>
+</div>
+<div>
+<% @game_review.game_review_moves.each do |move| %>
+  <%= move.san %>
+<% end %>
+</div>
+<div>
+  <% unless @game_review.done? %>
+    <%= link_to "Edit", edit_game_review_path(@game_review) %> |
+  <% end %>
+  <%= link_to "Back to reviews", game_reviews_path %>
 
-  <%= button_to "Destroy this game training", @game_review, method: :delete %>
+  <%= button_to "Destroy", @game_review, method: :delete %>
 </div>
