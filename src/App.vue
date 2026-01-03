@@ -1,7 +1,7 @@
 <script setup>
 import {ref } from 'vue'
 import 'vue3-chessboard/style.css';
-import GameComponent from './components/GameComponent.vue';
+import GamesComponent from './components/GamesComponent.vue';
 import PuzzleComponent from './components/PuzzleComponent.vue';
 import PuzzleCreatorComponent from './components/PuzzleCreatorComponent.vue';
 
@@ -11,8 +11,9 @@ const showPuzzle = () => {
   activeComponent.value = PuzzleComponent
 }
 
-const showGame = () => {
-  activeComponent.value = GameComponent
+const showGames = () => {
+  console.log('showing GamesComponent')
+  activeComponent.value = GamesComponent
 }
 
 const showPuzzleCreator = () => {
@@ -21,11 +22,11 @@ const showPuzzleCreator = () => {
 </script>
 
 <template>
-  <h1>Gambit</h1>
   <div id="navbar">
+    <h1>Gambit</h1>
     <button class="btn-gambit" @click="showPuzzle">Puzzle</button>
     <button class="btn-gambit" @click="showPuzzleCreator">Puzzle Creator</button>
-    <button class="btn-gambit" @click="showGame">Game Import</button>
+    <button class="btn-gambit" @click="showGames">Games</button>
   </div>
   <component :is="activeComponent"></component>
 </template>
@@ -36,9 +37,12 @@ const showPuzzleCreator = () => {
     color: white;
     text-align: center;
   }
+
   #navbar {
     padding: 10px;
+    display: flex;
   }
+
   .btn-gambit {
   position: relative;
   padding: 16px 42px;
@@ -54,13 +58,14 @@ const showPuzzleCreator = () => {
   overflow: hidden;
   transition: all 0.4s ease;
   }
+
   .btn-gambit::before {
   content: "";
   position: absolute;
   inset: 4px;
   border: 1px dashed rgba(184, 155, 94, 0.6);
   border-radius: 999px;
-}
+  }
 
   .btn-gambit:hover {
   color: #ffffff;

@@ -1,7 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { TheChessboard } from 'vue3-chessboard';
 import { Chess } from 'chess.js'
+
+const props = defineProps(['id'])
 
 let boardAPI;
 let gameLoaded = ref(false)
@@ -10,10 +12,21 @@ const pgn = ref('')
 const game = new Chess()
 let index = 0
 
-const loadGame = () => {
-    game.loadPgn(pgn.value)
+const loadGame = async() => {
+    const response = await fetch(`http://192.168.1.22:3000/games/${props.id}`)
+    const gameData = await response.json()
+    game.loadPgn(gameData.pgn)
+    
     gameLoaded.value = true
 }
+
+onMounted(loadGame)
+
+watch(props, async() => {
+    loadGame()
+    index = 0
+    boardAPI.setPosition(game.history({ verbose: true })[index].before)
+})
 
 const next = () => {
     index++
@@ -28,40 +41,14 @@ const previous = () => {
     boardAPI.setPosition(game.history({ verbose: true })[index].before)
 }
 
-const save = async () => {
-    console.log(pgn.value)
-    const response = await fetch(
-        'http://192.168.1.22:3000/games',
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ pgn: pgn.value })
-        }
-    )
-    const data = await response.json()
-    console.log(data)
-}
+
 </script>
 
 <template>
-    <div v-if="gameLoaded">
-        <div id="grid">
-            <div id="board">
-                <TheChessboard @board-created="(api) => (boardAPI = api)" />
-                <button @click="previous">Previous</button>
-                <button @click="next">Next</button>
-            </div>
-            <div id="aside">
-                <button class="btn-gambit" @click="save">Save Game</button>
-            </div>
-        </div>
-    </div>
-    <div v-else>
-        <div>
-            <textarea v-model="pgn" rows="25" cols="80"></textarea>
-        </div>
-        <div>
-            <button class="btn-gambit" @click="loadGame">Load</button>
-        </div>
-    </div>
+    <template v-if="gameLoaded">
+        <h2>Game {{ id }}</h2>
+        <TheChessboard @board-created="(api) => (boardAPI = api)" />
+        <button @click="previous">Previous</button>
+        <button @click="next">Next</button>
+    </template>
 </template>
