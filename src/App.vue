@@ -22,7 +22,7 @@ const showPuzzleCreator = () => {
 </script>
 
 <template>
-  <div id="navbar">
+  <div class="navbar">
     <h1>Gambit</h1>
     <button class="btn-gambit" @click="showPuzzle">Puzzle</button>
     <button class="btn-gambit" @click="showPuzzleCreator">Puzzle Creator</button>
@@ -38,9 +38,10 @@ const showPuzzleCreator = () => {
     text-align: center;
   }
 
-  #navbar {
+  .navbar {
     padding: 10px;
     display: flex;
+    align-items: left;
   }
 
   .btn-gambit {

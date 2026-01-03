@@ -23,14 +23,13 @@ const view = (id) => {
 </script>
 
 <template>
-    <h2>Games</h2>
     <div id="grid" v-if="gamesLoaded">
         <div id="board" v-if="gameSelected">
             <GameComponent :id="gameId"></GameComponent>
         </div>
         <div id="aside">
             <template v-for="game in games">
-                <div>{{ game.id }} <button @click="view(game.id)">View</button></div>
+                <div>{{ game.id }} <button class="btn-gambit" @click="view(game.id)">View</button></div>
             </template>
         </div>
     </div>
