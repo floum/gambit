@@ -42,7 +42,7 @@ const handleMove = async (move) => {
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(move)
+            body: JSON.stringify({ move: move })
         }
     )
     let game_study_move = await response.json()
