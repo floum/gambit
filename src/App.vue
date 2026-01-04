@@ -2,13 +2,11 @@
 import { ref } from 'vue'
 import 'vue3-chessboard/style.css';
 import GamesComponent from './components/GamesComponent.vue';
-import PuzzlesComponent from './components/PuzzlesComponent.vue';
 import StudiesComponent from './components/StudiesComponent.vue';
 
-let activeComponent = ref(PuzzlesComponent)
+let activeComponent = ref(GamesComponent)
 
 const showGames = () => {
-  console.log('showing GamesComponent')
   activeComponent.value = GamesComponent
 }
 
@@ -54,6 +52,11 @@ body {
   cursor: pointer;
   overflow: hidden;
   transition: all 0.4s ease;
+}
+
+.btn-small {
+  font-size: 10px;
+  padding: 12px 32px;
 }
 
 .btn-gambit::before {

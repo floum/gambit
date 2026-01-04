@@ -20,17 +20,17 @@ const view = (id) => {
     gameSelected.value = true
 }
 
-const studyAsWhite = async(gameId) => {
-    console.log('Study as white clicked !')
-    console.log(gameId)
+const studyAsWhite = async (gameId) => {
     const response = await fetch(
         'http://192.168.1.22:3000/game_studies',
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                game_id: gameId,
-                color: 'w'
+                game_study: {
+                    game_id: gameId,
+                    color: 'w'
+                }
             })
         }
     )
@@ -48,9 +48,9 @@ const studyAsWhite = async(gameId) => {
         <div id="aside">
             <template v-for="game in games">
                 <div>
-                    {{ game.white }} - {{ game.black }} | {{ game.result }}
-                    <button class="btn-gambit" @click="view(game.id)">View</button>
-                    <button class="btn-gambit" @click="studyAsWhite(game.id)">Study As White</button>
+                    {{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}
+                    <button class="btn-gambit btn-small" @click="view(game.id)">View</button>
+                    <button class="btn-gambit btn-small" @click="studyAsWhite(game.id)">Study As White</button>
                 </div>
             </template>
         </div>
