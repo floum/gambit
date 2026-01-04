@@ -2,14 +2,13 @@
 import {ref } from 'vue'
 import 'vue3-chessboard/style.css';
 import GamesComponent from './components/GamesComponent.vue';
-import PuzzleComponent from './components/PuzzleComponent.vue';
-import PuzzleCreatorComponent from './components/PuzzleCreatorComponent.vue';
+import PuzzlesComponent from './components/PuzzlesComponent.vue';
 import StudiesComponent from './components/StudiesComponent.vue';
 
-let activeComponent = ref(PuzzleComponent)
+let activeComponent = ref(PuzzlesComponent)
 
-const showPuzzle = () => {
-  activeComponent.value = PuzzleComponent
+const showPuzzles = () => {
+  activeComponent.value = PuzzlesComponent
 }
 
 const showGames = () => {
@@ -31,8 +30,7 @@ const study = () => {
   <div class="navbar">
     <h1>Gambit</h1>
     <button class="btn-gambit" @click="study">Study</button>
-    <button class="btn-gambit" @click="showPuzzle">Puzzle</button>
-    <button class="btn-gambit" @click="showPuzzleCreator">Puzzle Creator</button>
+    <button class="btn-gambit" @click="showPuzzles">Puzzles</button>
     <button class="btn-gambit" @click="showGames">Games</button>
   </div>
   <component :is="activeComponent"></component>
