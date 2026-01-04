@@ -4,7 +4,7 @@ import GameComponent from './GameComponent.vue';
 
 let games;
 let gameId = ref(null);
-let gameSelected = ref(false); 
+let gameSelected = ref(false);
 let gamesLoaded = ref(false);
 
 onMounted(async () => {
@@ -20,6 +20,24 @@ const view = (id) => {
     gameSelected.value = true
 }
 
+const studyAsWhite = async(gameId) => {
+    console.log('Study as white clicked !')
+    console.log(gameId)
+    const response = await fetch(
+        'http://192.168.1.22:3000/game_studies',
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                game_id: gameId,
+                color: 'w'
+            })
+        }
+    )
+    const data = await response.json()
+    console.log(response)
+}
+
 </script>
 
 <template>
@@ -29,7 +47,11 @@ const view = (id) => {
         </div>
         <div id="aside">
             <template v-for="game in games">
-                <div>{{ game.id }} <button class="btn-gambit" @click="view(game.id)">View</button></div>
+                <div>
+                    {{ game.white }} - {{ game.black }} | {{ game.result }}
+                    <button class="btn-gambit" @click="view(game.id)">View</button>
+                    <button class="btn-gambit" @click="studyAsWhite(game.id)">Study As White</button>
+                </div>
             </template>
         </div>
     </div>

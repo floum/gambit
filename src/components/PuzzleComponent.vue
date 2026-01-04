@@ -50,19 +50,3 @@ const next = () => {
     </div>
   </div>
 </template>
-
-<style scoped>
-#grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-}
-
-#board {
-  grid-column: 1 / 3;
-}
-
-#results {
-  grid-column: 3;
-}
-</style>
