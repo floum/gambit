@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { shallowRef } from 'vue'
 import GameIndexComponent from './GameIndexComponent.vue';
 import GameImportComponent from './GameImportComponent.vue';
 
-let activeComponent = ref(GameImportComponent)
+let activeComponent = shallowRef(GameImportComponent)
 
 const index = () => {
     activeComponent.value = GameIndexComponent

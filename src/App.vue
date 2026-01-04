@@ -4,6 +4,7 @@ import 'vue3-chessboard/style.css';
 import GamesComponent from './components/GamesComponent.vue';
 import PuzzleComponent from './components/PuzzleComponent.vue';
 import PuzzleCreatorComponent from './components/PuzzleCreatorComponent.vue';
+import StudiesComponent from './components/StudiesComponent.vue';
 
 let activeComponent = ref(PuzzleComponent)
 
@@ -19,11 +20,17 @@ const showGames = () => {
 const showPuzzleCreator = () => {
   activeComponent.value = PuzzleCreatorComponent
 }
+
+const study = () => {
+  activeComponent.value = StudiesComponent
+}
+
 </script>
 
 <template>
   <div class="navbar">
     <h1>Gambit</h1>
+    <button class="btn-gambit" @click="study">Study</button>
     <button class="btn-gambit" @click="showPuzzle">Puzzle</button>
     <button class="btn-gambit" @click="showPuzzleCreator">Puzzle Creator</button>
     <button class="btn-gambit" @click="showGames">Games</button>
