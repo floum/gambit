@@ -38,6 +38,16 @@ const studyAsWhite = async (gameId) => {
     console.log(response)
 }
 
+const destroy = async (gameId) => {
+    const response = await fetch(
+        `http://192.168.1.22:3000/games/${gameId}`,
+        {
+            method: "DELETE"
+        }
+    )
+    console.log(response.status)
+}
+
 </script>
 
 <template>
@@ -51,6 +61,7 @@ const studyAsWhite = async (gameId) => {
                     {{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}
                     <button class="btn-gambit btn-small" @click="view(game.id)">View</button>
                     <button class="btn-gambit btn-small" @click="studyAsWhite(game.id)">Study As White</button>
+                    <button class="btn-gambit btn-small" @click="destroy(game.id)">Destroy</button>
                 </div>
             </template>
         </div>
