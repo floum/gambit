@@ -2,6 +2,8 @@
 import { onMounted, ref } from 'vue';
 import GameComponent from './GameComponent.vue';
 
+const emit = defineEmits(['view'])
+
 let games;
 let gameId = ref(null);
 let gameSelected = ref(false);
@@ -16,8 +18,7 @@ onMounted(async () => {
 })
 
 const view = (id) => {
-    gameId.value = id
-    gameSelected.value = true
+    emit('view', id)
 }
 
 const studyAsWhite = async (gameId) => {
@@ -51,19 +52,16 @@ const destroy = async (gameId) => {
 </script>
 
 <template>
-    <div id="grid" v-if="gamesLoaded">
-        <div id="board" v-if="gameSelected">
-            <GameComponent :id="gameId"></GameComponent>
-        </div>
-        <div id="aside">
-            <template v-for="game in games">
-                <div>
-                    {{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}
+    <table>
+        <template v-if="gamesLoaded" v-for="game in games">
+            <tr>
+                <td>{{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}</td>
+                <td>
                     <button class="btn-gambit btn-small" @click="view(game.id)">View</button>
                     <button class="btn-gambit btn-small" @click="studyAsWhite(game.id)">Study As White</button>
                     <button class="btn-gambit btn-small" @click="destroy(game.id)">Destroy</button>
-                </div>
-            </template>
-        </div>
-    </div>
+                </td>
+            </tr>
+        </template>
+    </table>
 </template>

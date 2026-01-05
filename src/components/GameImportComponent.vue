@@ -27,7 +27,6 @@ const save = async () => {
         }
     )
     const data = await response.json()
-
 }    
 </script>
 

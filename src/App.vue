@@ -18,7 +18,7 @@ const study = () => {
 
 <template>
   <div class="navbar">
-    <h1>Gambit</h1>
+    <div>Gambit</div>
     <button class="btn-gambit" @click="study">Study</button>
     <button class="btn-gambit" @click="showGames">Games</button>
   </div>
@@ -34,8 +34,7 @@ body {
 
 .navbar {
   padding: 10px;
-  display: flex;
-  align-items: left;
+  display: inline;
 }
 
 .btn-gambit {

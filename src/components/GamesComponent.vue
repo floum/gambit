@@ -1,24 +1,38 @@
 <script setup>
-import { shallowRef } from 'vue'
+import { ref } from 'vue'
 import GameIndexComponent from './GameIndexComponent.vue';
+import GameComponent from './GameComponent.vue';
 import GameImportComponent from './GameImportComponent.vue';
 
-let activeComponent = shallowRef(GameImportComponent)
+let activeTab = ref('index')
+let gameId = ref(null)
 
 const index = () => {
-    activeComponent.value = GameIndexComponent
+    gameId.value = null
+    activeTab.value = 'index'
 }
 
 const importGame = () => {
-    activeComponent.value = GameImportComponent
+    gameId.value = null
+    activeTab.value = 'import'
 }
+
+const viewGame = (id) => {
+    gameId.value = id
+    activeTab.value = null
+}
+
 </script>
 
 <template>
     <div class="navbar">
         <h2>Games</h2>
-        <button class="btn-gambit" @click="importGame">Import</button>
         <button class="btn-gambit" @click="index">Index</button>
+        <button class="btn-gambit" @click="importGame">Import</button>
     </div>
-    <component :is="activeComponent"></component>
+    <div>
+        <GameIndexComponent v-if="activeTab=='index'" @view="viewGame"></GameIndexComponent>
+        <GameImportComponent v-if="activeTab=='import'"></GameImportComponent>
+        <GameComponent v-if="gameId" :id="gameId"></GameComponent>
+    </div>
 </template>
