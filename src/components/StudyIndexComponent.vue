@@ -14,7 +14,7 @@ const select = (id) => {
 }
 
 const gameName = (game) => {
-    return `${game.white} - ${game.white}`
+    return `${game.white} - ${game.black} ${game.result}`
 }
 </script>
 
