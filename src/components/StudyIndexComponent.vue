@@ -24,6 +24,7 @@ const gameName = (game) => {
         <tr>
         <td>{{ study.id }}</td>
         <td>{{ gameName(study.game) }}</td>
+        <td>{{ study.progress }}</td>
         <td><button class="btn-gambit" @click="select(study.id)">Select</button></td>
         </tr>
     </template>
