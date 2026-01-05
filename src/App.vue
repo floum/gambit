@@ -18,7 +18,7 @@ const study = () => {
 
 <template>
   <div class="navbar">
-    <div>Gambit</div>
+    <h1 class="nav-title">Gambit</h1>
     <button class="btn-gambit" @click="study">Study</button>
     <button class="btn-gambit" @click="showGames">Games</button>
   </div>
@@ -37,39 +37,27 @@ body {
   display: inline;
 }
 
+.nav-title {
+  display: inline;
+}
+
 .btn-gambit {
-  position: relative;
-  padding: 16px 42px;
-  background: linear-gradient(180deg, #0b0b0b, #1a1a1a);
-  color: #e8dcd2;
-  border: 2px solid #b89b5e;
-  border-radius: 999px;
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
   cursor: pointer;
-  overflow: hidden;
-  transition: all 0.4s ease;
+  transition: 0.2s ease;
 }
 
-.btn-small {
-  font-size: 10px;
-  padding: 12px 32px;
-}
+.btn-small {}
 
-.btn-gambit::before {
-  content: "";
-  position: absolute;
-  inset: 4px;
-  border: 1px dashed rgba(184, 155, 94, 0.6);
-  border-radius: 999px;
-}
+.btn-gambit::before {}
 
 .btn-gambit:hover {
-  color: #ffffff;
-  box-shadow: 0 0 25px rgba(184, 155, 94, 0.5);
-  transform: translateY(-2px);
+  background: #333;
 }
 
 #grid {

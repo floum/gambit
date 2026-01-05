@@ -8,6 +8,7 @@ let study = ref(null)
 
 const index = () => {
     id.value = null
+    study.value = null
 }
 
 const selected = async(studyId) => {
@@ -17,7 +18,9 @@ const selected = async(studyId) => {
 </script>
 
 <template>
+    <div>
     <div class="navbar">
+        <h2 class="nav-title">Studies</h2>
         <button class="btn-gambit" @click="index">Index</button>
     </div>
     <template v-if="study">
@@ -26,4 +29,5 @@ const selected = async(studyId) => {
     <template v-else>
         <StudyIndexComponent @selected="selected" />
     </template>
+    </div>
 </template>

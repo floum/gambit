@@ -25,14 +25,16 @@ const viewGame = (id) => {
 </script>
 
 <template>
-    <div class="navbar">
-        <h2>Games</h2>
-        <button class="btn-gambit" @click="index">Index</button>
-        <button class="btn-gambit" @click="importGame">Import</button>
-    </div>
     <div>
-        <GameIndexComponent v-if="activeTab=='index'" @view="viewGame"></GameIndexComponent>
-        <GameImportComponent v-if="activeTab=='import'"></GameImportComponent>
-        <GameComponent v-if="gameId" :id="gameId"></GameComponent>
+        <div class="navbar">
+            <h2 class="nav-title">Games</h2>
+            <button class="btn-gambit" @click="index">Index</button>
+            <button class="btn-gambit" @click="importGame">Import</button>
+        </div>
+        <div>
+            <GameIndexComponent v-if="activeTab == 'index'" @view="viewGame"></GameIndexComponent>
+            <GameImportComponent v-if="activeTab == 'import'"></GameImportComponent>
+            <GameComponent v-if="gameId" :id="gameId"></GameComponent>
+        </div>
     </div>
 </template>

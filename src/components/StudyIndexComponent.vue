@@ -17,7 +17,6 @@ const select = (id) => {
 </script>
 
 <template>
-    <h2>Studies</h2>
     <table>
     <template v-for="study in studies">
         <tr>
