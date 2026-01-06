@@ -33,7 +33,7 @@ const viewGame = (id) => {
         </div>
         <div>
             <GameIndexComponent v-if="activeTab == 'index'" @view="viewGame"></GameIndexComponent>
-            <GameImportComponent v-if="activeTab == 'import'"></GameImportComponent>
+            <GameImportComponent v-if="activeTab == 'import'" @imported="index"></GameImportComponent>
             <GameComponent v-if="gameId" :id="gameId"></GameComponent>
         </div>
     </div>

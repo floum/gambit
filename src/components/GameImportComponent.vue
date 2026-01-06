@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { Chess } from 'chess.js'
+import { createGame } from '../assets/api.js'
+
+const emit = defineEmits('imported')
+
 let pgn = ref(null)
 let game = new Chess()
 
@@ -9,24 +13,18 @@ const save = async () => {
     let headers = game.getHeaders()
     console.log(headers)
     let history = game.history({ verbose: true })
-    const response = await fetch(
-        'http://192.168.1.22:3000/games',
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                game: {
-                    pgn: pgn.value,
-                    moves: history,
-                    white: headers.White,
-                    black: headers.Black,
-                    played: headers.Date,
-                    result: headers.Result
-                 }
-            })
-        }
-    )
-    const data = await response.json()
+    const gameData = {
+        pgn: pgn.value,
+        moves: history,
+        white: headers.White,
+        black: headers.Black,
+        played: headers.Date,
+        result: headers.Result
+    }
+
+    if(createGame(gameData)) {
+        emit('imported')
+    }
 }    
 </script>
 

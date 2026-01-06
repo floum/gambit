@@ -2,6 +2,7 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import { TheChessboard } from 'vue3-chessboard';
 import { Chess } from 'chess.js'
+import { fetchGame } from '../assets/api.js'
 
 const props = defineProps(['id'])
 
@@ -14,8 +15,7 @@ const game = new Chess()
 let index = 0
 
 const loadGame = async() => {
-    const response = await fetch(`http://192.168.1.22:3000/games/${props.id}`)
-    gameData = await response.json()
+    gameData = await fetchGame(props.id)
     game.loadPgn(gameData.pgn)
     gameLoaded.value = true
 }

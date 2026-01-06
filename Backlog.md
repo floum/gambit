@@ -1,13 +1,16 @@
-Backlog:
-- Shallowref warning
-- Proper Puzzles:
-  - MultiMoves
-  - Create & Save Puzzles
-  - Orientation
-- API from env
-
-- Feature:
-  - Better Study Results
+TODO:
+- Blocking Issues: []
+- Main Features:
   - Start study as black
-- Fixes:
-  - Games UI
+  - Better Study Results UI & stats
+- Minor Issues:
+  - Shallowref warning
+  - Games Index not updating on Game Import
+- Features:
+  - Proper Puzzles:
+    - MultiMoves
+    - Create & Save Puzzles
+    - Orientation
+- Technical:
+  - API from env
+  - Refactor API
