@@ -10,6 +10,10 @@ onMounted(async () => {
     await loadGames()
 })
 
+const winner = (game) => {
+    return game.result == '0-1' ? 'black' : 'white'
+}
+
 const loadGames = async () => {
     const response = await fetch(
         'http://192.168.1.22:3000/games'
@@ -21,7 +25,7 @@ const view = (id) => {
     emit('view', id)
 }
 
-const studyAsWhite = async (gameId) => {
+const study = async (game) => {
     const response = await fetch(
         'http://192.168.1.22:3000/game_studies',
         {
@@ -29,8 +33,8 @@ const studyAsWhite = async (gameId) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 game_study: {
-                    game_id: gameId,
-                    color: 'w'
+                    game_id: game.id,
+                    color: winner(game)[0]
                 }
             })
         }
@@ -60,7 +64,7 @@ const destroy = async (gameId) => {
                 <td>{{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}</td>
                 <td>
                     <button class="btn-gambit btn-small" @click="view(game.id)">View</button>
-                    <button class="btn-gambit btn-small" @click="studyAsWhite(game.id)">Study As White</button>
+                    <button class="btn-gambit btn-small" @click="study(game)">Study as {{ winner(game) }}</button>
                     <button class="btn-gambit btn-small" @click="destroy(game.id)">Destroy</button>
                 </td>
             </tr>
