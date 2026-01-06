@@ -7,6 +7,7 @@ Backlog:
 - API from env
 
 - Feature:
-  - Create Study from UI
+  - Better Study Results
+  - Start study as black
 - Fixes:
   - Games UI
