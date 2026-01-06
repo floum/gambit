@@ -4,18 +4,18 @@ import GameComponent from './GameComponent.vue';
 
 const emit = defineEmits(['view'])
 
-let games;
-let gameId = ref(null);
-let gameSelected = ref(false);
-let gamesLoaded = ref(false);
+let games = ref({});
 
 onMounted(async () => {
+    await loadGames()
+})
+
+const loadGames = async () => {
     const response = await fetch(
         'http://192.168.1.22:3000/games'
     )
-    games = await response.json()
-    gamesLoaded.value = true
-})
+    games.value = await response.json()
+}
 
 const view = (id) => {
     emit('view', id)
@@ -46,14 +46,16 @@ const destroy = async (gameId) => {
             method: "DELETE"
         }
     )
-    console.log(response.status)
+    if (response.status == 204) {
+        await loadGames()
+    }
 }
 
 </script>
 
 <template>
     <table>
-        <template v-if="gamesLoaded" v-for="game in games">
+        <template v-for="game in games">
             <tr>
                 <td>{{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}</td>
                 <td>

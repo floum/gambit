@@ -21,7 +21,6 @@ const viewGame = (id) => {
     gameId.value = id
     activeTab.value = null
 }
-
 </script>
 
 <template>
