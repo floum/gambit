@@ -58,12 +58,13 @@ const destroy = async (gameId) => {
 </script>
 
 <template>
+    <h2>Games</h2>
     <table>
         <template v-for="game in games">
             <tr>
                 <td>{{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}</td>
                 <td>
-                    <button class="btn-gambit btn-small" @click="view(game.id)">View</button>
+                    <RouterLink :to="{ name: 'games.show', params: { id: game.id } }" class="btn-gambit btn-small" @click="view(game.id)">View</RouterLink>
                     <button class="btn-gambit btn-small" @click="study(game)">Study as {{ winner(game) }}</button>
                     <button class="btn-gambit btn-small" @click="destroy(game.id)">Destroy</button>
                 </td>

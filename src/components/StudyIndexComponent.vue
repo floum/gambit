@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-const emit = defineEmits(['selected'])
 
 let studies = ref([]);
 
@@ -9,9 +8,6 @@ onMounted(async () => {
     studies.value = await response.json()
 })
 
-const select = (id) => {
-    emit('selected', id)
-}
 
 const gameNames = computed(() => {
     return studies.value.reduce((names, study)=> {
@@ -23,13 +19,14 @@ const gameNames = computed(() => {
 </script>
 
 <template>
+    <h2>Studies</h2>
     <table>
         <template v-for="study in studies">
             <tr>
                 <td>{{ study.id }}</td>
                 <td>{{ gameNames[study.id] }}</td>
                 <td>{{ study.progress }}</td>
-                <td><button class="btn-gambit" @click="select(study.id)">Select</button></td>
+                <td><RouterLink class="btn-gambit" :to="{ name: 'studies.show', params: { id: study.id }}">Select</RouterLink></td>
             </tr>
         </template>
     </table>
