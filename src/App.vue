@@ -19,10 +19,10 @@ const study = () => {
 <template>
   <div class="navbar">
     <h1 class="nav-title">Gambit</h1>
-    <button class="btn-gambit" @click="study">Study</button>
-    <button class="btn-gambit" @click="showGames">Games</button>
+    <RouterLink :to="{ name: 'studies.index' }" class="btn-gambit">Study</RouterLink>
+    <RouterLink :to="{ name: 'games.index' }" class="btn-gambit">Games</RouterLink>
   </div>
-  <component :is="activeComponent"></component>
+  <RouterView></RouterView>
 </template>
 
 <style>
