@@ -1,25 +1,11 @@
 <script setup>
-import { ref } from 'vue'
 import 'vue3-chessboard/style.css';
-import GamesComponent from './components/GamesComponent.vue';
-import StudiesComponent from './components/StudiesComponent.vue';
-
-let activeComponent = ref(GamesComponent)
-
-const showGames = () => {
-  activeComponent.value = GamesComponent
-}
-
-const study = () => {
-  activeComponent.value = StudiesComponent
-}
-
 </script>
 
 <template>
   <div class="navbar">
     <h1 class="nav-title">Gambit</h1>
-    <RouterLink :to="{ name: 'studies.index' }" class="btn-gambit">Study</RouterLink>
+    <RouterLink :to="{ name: 'studies.index' }" class="btn-gambit">Studies</RouterLink>
     <RouterLink :to="{ name: 'games.index' }" class="btn-gambit">Games</RouterLink>
   </div>
   <RouterView></RouterView>

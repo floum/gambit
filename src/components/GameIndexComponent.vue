@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import GameComponent from './GameComponent.vue';
 
 const emit = defineEmits(['view'])
 
