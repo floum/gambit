@@ -1,23 +1,17 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { fetchGames } from '../assets/api.js'
 
 const emit = defineEmits(['view'])
 
 let games = ref({});
 
 onMounted(async () => {
-    await loadGames()
+    games.value = await fetchGames()
 })
 
 const winner = (game) => {
     return game.result == '0-1' ? 'black' : 'white'
-}
-
-const loadGames = async () => {
-    const response = await fetch(
-        'http://192.168.1.22:3000/games'
-    )
-    games.value = await response.json()
 }
 
 const view = (id) => {
@@ -50,7 +44,7 @@ const destroy = async (gameId) => {
         }
     )
     if (response.status == 204) {
-        await loadGames()
+        games.value = await fetchGames()
     }
 }
 
@@ -58,16 +52,20 @@ const destroy = async (gameId) => {
 
 <template>
     <h2>Games</h2>
-    <table>
-        <template v-for="game in games">
-            <tr>
-                <td>{{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}</td>
-                <td>
-                    <RouterLink :to="{ name: 'games.show', params: { id: game.id } }" class="btn-gambit btn-small" @click="view(game.id)">View</RouterLink>
-                    <button class="btn-gambit btn-small" @click="study(game)">Study as {{ winner(game) }}</button>
-                    <button class="btn-gambit btn-small" @click="destroy(game.id)">Destroy</button>
-                </td>
-            </tr>
-        </template>
-    </table>
+    <template v-if="games">
+        <table>
+            <template v-for="game in games">
+                <tr>
+                    <td>{{ game.white || 'N.N' }} - {{ game.black || 'N.N' }} | {{ game.result || 'unknown result' }}
+                    </td>
+                    <td>
+                        <RouterLink :to="{ name: 'games.show', params: { id: game.id } }" class="btn-gambit btn-small"
+                            @click="view(game.id)">View</RouterLink>
+                        <button class="btn-gambit btn-small" @click="study(game)">Study as {{ winner(game) }}</button>
+                        <button class="btn-gambit btn-small" @click="destroy(game.id)">Destroy</button>
+                    </td>
+                </tr>
+            </template>
+        </table>
+    </template>
 </template>

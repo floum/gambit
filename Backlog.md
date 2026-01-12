@@ -3,8 +3,6 @@ TODO:
 - Main Features:
   - Better Study Results UI & stats
 - Minor Issues:
-  - Manage mate in stockfish score
-  - Shallowref warning
   - Games Index not updating on Game Import
 - Features:
   - Proper Puzzles:

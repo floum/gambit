@@ -17,7 +17,7 @@ const moves = computed(() => {
 })
 
 const difference = (move) => {
-    return move.submitted.evaluation - move.expected.evaluation
+    return Math.round((move.submitted.evaluation - move.expected.evaluation) * 100) / 100
 }
 
 const view = (move) => {
@@ -35,32 +35,42 @@ const loadBoard = (api) => {
 
 <template>
     <div>Results</div>
-    <div id="grid">
-        <div id="board">
-            <div v-if="currentMove">
-                <TheChessboard @board-created="loadBoard" :board-config="boardConfig" />
-                <div>Played : {{ currentMove.expected.san }}</div>
-                <div>Submitted : {{ currentMove.submitted.san }}</div>
+    <div>
+        <div id="move-results">
+            <div class="move-results__header">
+                <div>GM</div>
+                <div>Eval</div>
+                <div>diff</div>
+                <div>You</div>
             </div>
-        </div>
-        <table>
-            <thead>
-                <th>GM Move</th>
-                <th>evaluation</th>
-                <th>Your Move</th>
-                <th>evaluation</th>
-            </thead>
             <template v-for="move in moves">
-                <tr>
-                    <td>{{ move.expected.san }}</td>
-                    <td>{{ move.expected.evaluation }}</td>
-                    <td>{{ move.submitted.san }}</td>
-                    <td>{{ move.submitted.evaluation }}</td>
-                    <td>{{ difference(move) }}</td>
-                    <td><button @click="view(move)">View</button></td>
-                    <td></td>
-                </tr>
+                <div class="move-results__move">
+                    <div><button class="btn-gambit" @click="view(move)">{{ move.expected.san }}</button></div>
+                    <div>{{ move.expected.evaluation }}</div>
+                    <div>{{ difference(move) }}</div>
+                    <div>{{ move.submitted.san }}</div>
+                </div>
             </template>
-        </table>
+        </div>
+    </div>
+    <div>
+        <div v-if="currentMove">
+            <TheChessboard @board-created="loadBoard" :board-config="boardConfig" />
+        </div>
     </div>
 </template>
+
+<style>
+#move-results {
+    display: flex;
+    overflow: scroll;
+}
+
+.move-results__header {
+    font-weight: bold;
+}
+
+.move-results__move {
+    padding-left: 16px;
+}
+</style>

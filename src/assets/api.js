@@ -23,3 +23,8 @@ export const fetchStudy = async (id) => {
     const response = await fetch(`${api_url}/game_studies/${id}`)
     return await response.json()
 }
+
+export const fetchGames = async () => {
+    const response = await fetch(`${api_url}/games`)
+    return await response.json()
+}
