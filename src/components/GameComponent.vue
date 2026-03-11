@@ -16,12 +16,20 @@ const gameName = computed(() => {
     return `${game.value.white} - ${game.value.black} ${game.value.result}`
 })
 
+const start = () => {
+    boardAPI.viewStart()
+}
+
 const next = () => {
     boardAPI.viewNext()
 }
 
 const previous = () => {
     boardAPI.viewPrevious()
+}
+
+const end = () => {
+    boardAPI.stopViewingHistory()
 }
 
 const loadGame = async(api) => {
@@ -35,8 +43,16 @@ const loadGame = async(api) => {
 <template>
     <template v-if="game">
         <h2>{{ gameName }}</h2>
-        <TheChessboard @board-created="loadGame" />
-        <button class="btn-gambit" @click="previous">< Previous</button>
-        <button class="btn-gambit" @click="next">Next ></button>
+        <div class="left">
+            <TheChessboard @board-created="loadGame" />
+        </div>
+        <button class="btn-gambit" @click="start"><<</button>
+        <button class="btn-gambit" @click="previous">Previous</button>
+        <button class="btn-gambit" @click="next">Next</button>
+        <button class="btn-gambit" @click="end">>></button>
+
     </template>
 </template>
+
+<style>
+</style>

@@ -36,3 +36,10 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Backlog
+- spot dubious moves in repertoire
+  - suggest better moves
+- mark repertoire move as confirmed
+- add specific moves to repertoire
+- import model lines into repertoire

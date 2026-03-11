@@ -62,7 +62,7 @@ const destroy = async (gameId) => {
                         <RouterLink :to="{ name: 'games.show', params: { id: game.id } }" class="btn-gambit btn-small"
                             @click="view(game.id)">View</RouterLink>
                         <button class="btn-gambit btn-small" @click="study(game)">Study as {{ winner(game) }}</button>
-                        <button class="btn-gambit btn-small" @click="destroy(game.id)">Destroy</button>
+                        <button class="btn-gambit btn-small btn-danger" @click="destroy(game.id)">Destroy</button>
                     </td>
                 </tr>
             </template>

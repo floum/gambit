@@ -7,6 +7,7 @@ import 'vue3-chessboard/style.css';
     <h1 class="nav-title">Gambit</h1>
     <RouterLink :to="{ name: 'studies.index' }" class="btn-gambit">Studies</RouterLink>
     <RouterLink :to="{ name: 'games.index' }" class="btn-gambit">Games</RouterLink>
+    <RouterLink :to="{ name: 'repertoires.index' }" class="btn-gambit">Repertoires</RouterLink>
   </div>
   <RouterView></RouterView>
 </template>
@@ -36,6 +37,10 @@ body {
   font-size: 14px;
   cursor: pointer;
   transition: 0.2s ease;
+}
+
+.btn-danger {
+  color: red;
 }
 
 .btn-small {}
