@@ -3,23 +3,22 @@ import { TheChessboard } from 'vue3-chessboard';
 
 const props = defineProps(['moves'])
 
-const emits = defineEmits(['answer'])
+const emit = defineEmits(['answer'])
 
 var index = 0
 var boardAPI
 
 const handleMove = (move) => {
-    console.log(move)
-        var expected_move = props.moves[index]
+    var expected_move = props.moves[index]
 
-    emit('move', {
+    emit('answer', {
         move: move,
         expectedMove: expected_move,
         success: expected_move.san == move.san
     })
     index++
     if (index < props.moves.length) {
-        boardAPI.setPosition(props.moves[index])
+        boardAPI.setPosition(props.moves[index].fen)
     }
 }
 

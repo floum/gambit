@@ -1,28 +1,49 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { loadBoxes, loadCrushing } from '@/assets/api'
+import { ref, onMounted, computed } from 'vue'
 import MoveTrainerComponent from '../MoveTrainerComponent.vue'
+import { useRepertoireStore } from '@/stores/repertoire';
 
-var boxes = ref({})
-var crushing = ref({})
-var index = ref(0)
-var answers = ref([])
-var fen = ref('')
-var boardAPI
+const repertoireStore = useRepertoireStore()
+
+const loading = ref(true)
+const repertoire = ref({})
+const repertoire_moves = ref([])
+const filter = ref('all')
 
 const props = defineProps(['id'])
 
 onMounted(async () => {
-    boxes.value = await loadBoxes(props.id)
-    crushing.value = await loadCrushing(props.id)
-    
+    repertoire.value = await repertoireStore.get(props.id)
+    repertoire_moves.value = repertoire.value.repertoire_moves
+    console.log(repertoire_moves.value)
+    loading.value = false
+})
+
+const handleAnswer = (answer) => {
+    console.log(answer)
+}
+
+const practiced = computed(() => {
+  if (filter.value == 'all') { 
+    return repertoire_moves.value 
+    }
+  if (filter.value == 'boxes') {
+    return repertoire_moves.value.filter(repertoire_move => repertoire_move.box)
+  }
 })
 
 </script>
 
 <template>
-    <h2>{{ repertoire.name }}</h2>
-    <MoveTrainerComponent :moves="boxes" @move=""></MoveTrainerComponent>
+    <template v-if="!loading">
+        <h2>{{ repertoire.name }} | Practicing {{ practiced.length }} Moves</h2>
+          <select v-model="filter">
+            <option value="all">All</option>
+            <option value="boxes">Boxes</option>
+          </select>
+
+        <MoveTrainerComponent :moves="practiced" @answer="handleAnswer"></MoveTrainerComponent>
+    </template>
 </template>
 
 <style>
