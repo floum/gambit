@@ -1,7 +1,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { TheChessboard } from 'vue3-chessboard';
-import { fetchRepertoire, lichessResponses, weightedRandom, createMove, confirmRepertoireMove } from '@/assets/api';
+import { weightedRandom } from '@/assets/utils';
+import { createMove, confirmRepertoireMove } from '@/assets/api';
+
+import { useLichessResponseStore } from '@/stores/lichessResponse';
+import { useRepertoireStore } from '@/stores/repertoire';
+
+const lichess = useLichessResponseStore()
+const repertoireStore = useRepertoireStore()
 
 let boardAPI;
 
@@ -13,12 +20,12 @@ var newMove = ref(undefined)
 var opponentMove = ref(null)
 
 onMounted(async () => {
-    repertoire.value = await fetchRepertoire(props.id)
+    repertoire.value = await repertoireStore.get(props.id)
     await reset()
 })
 
 const playRandomLichessMove = async () => {
-    var availableResponses = await lichessResponses(boardAPI.getFen())
+    var availableResponses = await lichess.responses(boardAPI.getFen())
     if (availableResponses.length == 0) {
         opponentMove.value = undefined
         return
@@ -58,7 +65,7 @@ const reset = async () => {
         })
     }
     if (!repertoire.value.white) {
-        opponentMove.value = weightedRandom(await lichessResponses('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'))
+        opponentMove.value = weightedRandom(await lichess.responses('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'))
         boardAPI.move(opponentMove.value.san)
     }
     newMove.value = undefined

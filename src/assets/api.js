@@ -1,6 +1,8 @@
 const bearer_token = process.env.LICHESS_TOKEN
 const api_url = 'http://192.168.1.22:3000'
 
+import { weightedRandom } from "./utils"
+
 export const fetchGame = async (id) => {
     const response = await fetch(`${api_url}/games/${id}`)
     return await response.json()
@@ -52,18 +54,6 @@ export const fetchRepertoire = async (id) => {
 export const fetchRepertoires = async () => {
     const response = await fetch(`${api_url}/repertoires`)
     return await response.json()
-}
-
-export function weightedRandom(items) {
-  const totalWeight = items.reduce((sum, item) => sum + item.count, 0);
-  let r =  Math.random() * totalWeight;
-
-  for (const item of items) {
-    r -= item.count;
-    if (r <= 0) {
-      return item;
-    }
-  }
 }
 
 export const randomMasterResponse = async (fen) => {
