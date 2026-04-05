@@ -4,6 +4,7 @@ import GameComponent from '../components/GameComponent.vue';
 import StudyIndexComponent from '../components/StudyIndexComponent.vue'
 import StudyComponent from '../components/StudyComponent.vue';
 import RepertoiresComponent from '@/components/Repertoires/RepertoiresComponent.vue';
+import RepertoireBuilderComponent from '@/components/Repertoires/RepertoireBuilderComponent.vue';
 import RepertoirePracticeComponent from '@/components/Repertoires/RepertoirePracticeComponent.vue';
 import RepertoireComponent from '@/components/Repertoires/RepertoireComponent.vue';
 
@@ -14,6 +15,7 @@ const routes = [
     { path: '/studies', component: StudyIndexComponent, name: 'studies.index'},
     { path: '/studies/:id', component: StudyComponent, name: 'studies.show', props: true},
     { path: '/repertoires', component: RepertoiresComponent, name: 'repertoires.index' },
+    { path: '/repertoires/:id/build', component: RepertoireBuilderComponent, name: 'repertoires.build', props: true },
     { path: '/repertoires/:id/practice', component: RepertoirePracticeComponent, name: 'repertoires.practice', props: true },
     { path: '/repertoires/:id', component: RepertoireComponent, name: 'repertoires.show', props: true }
 ]

@@ -54,9 +54,9 @@ export const fetchRepertoires = async () => {
     return await response.json()
 }
 
-function weightedRandom(items) {
+export function weightedRandom(items) {
   const totalWeight = items.reduce((sum, item) => sum + item.count, 0);
-  let r = Math.random() * totalWeight;
+  let r =  Math.random() * totalWeight;
 
   for (const item of items) {
     r -= item.count;
@@ -87,7 +87,7 @@ export const fetchMasters = async (fen) => {
 
 export const fetchLichessMoves = async (fen) => {
     const response = await fetch(
-        `https://explorer.lichess.org/lichess?variant=standard&speeds=blitz,rapid&ratings=2000,2200,2500&fen=${fen}`,
+        `https://explorer.lichess.org/lichess?variant=standard&speeds=rapid,classical&ratings=1800,2000,2200,2500&fen=${fen}`,
         {
             method: "GET",
             headers: {
@@ -98,10 +98,12 @@ export const fetchLichessMoves = async (fen) => {
 }
 
 export const randomLichessResponse = async (fen) => {
+    return weightedRandom(lichessResponses(fen))
+}
+
+export const lichessResponses = async (fen) => {
     var lichess = await fetchLichessMoves(fen)
-    console.log(lichess)
-    var moves = lichess.moves.map((move) => { return {san: move.san, count: move.white + move.draws + move.black } })
-    return weightedRandom(moves)
+    return lichess.moves.map((move) => { return {san: move.san, count: move.white + move.draws + move.black } }).sort((move1, move2) => (move2.count - move1.count))
 }
 
 export const createMove = async (data) => {
@@ -118,7 +120,7 @@ export const createMove = async (data) => {
             })
         }
     )
-    return response.status
+    return response
 }
 
 export const destroyRepertoireMove = async (data) => {
@@ -132,6 +134,7 @@ export const destroyRepertoireMove = async (data) => {
 }
 
 export const confirmRepertoireMove = async (data) => {
+    console.log(data)
     const response = await fetch(
         `${api_url}/repertoire_moves/${data.id}`,
         {
@@ -148,4 +151,14 @@ export const confirmRepertoireMove = async (data) => {
         }
     )
     return response.status < 400
+}
+
+export const loadBoxes = async (id) => {
+    var repertoire = await fetchRepertoire(id)
+    return repertoire.repertoire_moves.filter((move) => (move.box))
+}
+
+export const loadCrushing = async (id) => {
+    var repertoire = await fetchRepertoire(id)
+    return repertoire.repertoire_moves.filter((move) => (move.crushing))
 }

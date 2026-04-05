@@ -9,6 +9,11 @@ TODO:
     - MultiMoves
     - Create & Save Puzzles
     - Orientation
+  - Repertoire:
+    - Base comment/characteristics
+  - Repertoire Moves :
+    - Box?
+    - Defining/Important/Critical?
 - Technical:
   - API from env
   - Refactor API

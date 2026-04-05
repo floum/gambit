@@ -44,8 +44,9 @@ onMounted(async () => {
             <tr v-for="repertoire in repertoires">
                 <td>{{ repertoire.name }}</td>
                 <td>{{ repertoire.white ? 'white' : 'black' }}</td>
-                <td><RouterLink :to="{ name: 'repertoires.practice', params: { id: repertoire.id } }" class="btn-gambit btn-small">Practice</RouterLink></td>
+                <td><RouterLink :to="{ name: 'repertoires.build', params: { id: repertoire.id } }" class="btn-gambit btn-small">Build</RouterLink></td>
                 <td><RouterLink :to="{ name: 'repertoires.show', params: { id: repertoire.id } }" class="btn-gambit btn-small">Show</RouterLink></td>
+                <td><RouterLink :to="{ name: 'repertoires.practice', params: { id: repertoire.id } }" class="btn-gambit btn-small">Boxes</RouterLink></td>
             </tr>
         </tbody>
     </table>
