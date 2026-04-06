@@ -38,7 +38,7 @@ export const useLichessResponseStore = defineStore('lichessResponse', {
             return lichessFen.responses
         },
         async randomResponse(fen) {
-            return await this.responses(fen)[Math.floor(Math.random()*items.length)]
+            return await this.responses(fen)[Math.floor(Math.random()*this.responses.length)]
         },
         async mainResponse(fen) {
             return await this.responses(fen)[0]
