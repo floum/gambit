@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { TheChessboard } from 'vue3-chessboard';
 import { fetchRepertoire, destroyRepertoireMove, confirmRepertoireMove } from '@/assets/api';
+import { useAlertStore } from '@/stores/alert';
 
 const props = defineProps(['id'])
 
@@ -38,10 +39,29 @@ const setBoard = (api, repertoireMove) => {
 
 const destroy = async (repertoireMove) => {
     var response = await destroyRepertoireMove(repertoireMove)
+        if (response.status < 400) {
+        const alertStore = useAlertStore()
+        alertStore.alert = 'Move successfully destroyed.'
+        alertStore.type = 'success'
+    }
 }
 
 const confirm = async (repertoireMove) => {
     var response = await confirmRepertoireMove(repertoireMove)
+    if (response.status < 400) {
+        const alertStore = useAlertStore()
+        alertStore.alert = 'Move successfully confirmed.'
+        alertStore.type = 'success'
+    }
+}
+
+const reject = async (repertoireMove) => {
+    var response = await rejectRepertoireMove(repertoireMove)
+    if (response.status < 400) {
+        const alertStore = useAlertStore()
+        alertStore.alert = 'Move successfully confirmed.'
+        alertStore.type = 'success'
+    }
 }
 </script>
 
@@ -57,11 +77,11 @@ const confirm = async (repertoireMove) => {
             </div>
             <div>
                 <div>{{ repertoireMove.san }}</div>
-                <div>{{ repertoireMove.box }} - {{ repertoireMove.crushing }}</div>
                 <div><a :href="'https://lichess.org/analysis/' + repertoireMove.fen" target="_blank">Lichess</a>
                 </div>
                 <div>
                     <button class="btn-gambit btn-small" @click="confirm(repertoireMove)">Confirm</button>
+                    <button class="btn-gambit btn-small" @click="reject(repertoireMove)">Reject</button>
                     <button class="btn-gambit btn-danger btn-small" @click="destroy(repertoireMove)">Remove</button>
                 </div>
             </div>    

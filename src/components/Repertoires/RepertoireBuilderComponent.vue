@@ -80,6 +80,10 @@ const confirmMove = async () => {
 
 <template>
     <h2>{{ repertoire.name }}</h2>
+        <select v-model="build">
+            <option value="random">Weighted Random</option>
+            <option value="mostViewed">Most Viewed</option>
+          </select>
     <TheChessboard @board-created="(api) => (boardAPI = api)" @move="handleMove" />
     <button @click="reset">Reset</button>
     <template v-if="newMove">
