@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { fetchGames } from '../assets/api.js'
+import { fetchGames, createGameStudy } from '../assets/api.js'
 
 const emit = defineEmits(['view'])
 
@@ -19,21 +19,8 @@ const view = (id) => {
 }
 
 const study = async (game) => {
-    const response = await fetch(
-        'http://192.168.1.22:3000/game_studies',
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                game_study: {
-                    game_id: game.id,
-                    color: winner(game)[0]
-                }
-            })
-        }
-    )
-    const data = await response.json()
-    console.log(response)
+    const data = await createGameStudy(game)
+    console.log(data)
 }
 
 const destroy = async (gameId) => {

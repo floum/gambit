@@ -1,16 +1,16 @@
-const bearer_token = process.env.LICHESS_TOKEN
-const api_url = 'http://192.168.1.22:3000'
+const bearer_token = import.meta.env.VITE_LICHESS_TOKEN;
+export const apiUrl = import.meta.env.VITE_API_URL;
 
 import { weightedRandom } from "./utils"
 
 export const fetchGame = async (id) => {
-    const response = await fetch(`${api_url}/games/${id}`)
+    const response = await fetch(`${apiUrl}/games/${id}`)
     return await response.json()
 }
 
 export const createGame = async (data) => {
     const response = await fetch(
-        `${api_url}/games`,
+        `${apiUrl}/games`,
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -22,19 +22,37 @@ export const createGame = async (data) => {
     return response.status == 201
 }
 
+export const createGameStudy = async (game) => {
+    const response = await fetch(
+        `${apiUrl}/game_studies`,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                game_study: {
+                    game_id: game.id,
+                    color: game.result == '0-1' ? 'b' : 'w'
+                }
+            })
+        }
+    )
+    const data = await response.json()
+    return data
+}
+
 export const fetchStudy = async (id) => {
-    const response = await fetch(`${api_url}/game_studies/${id}`)
+    const response = await fetch(`${apiUrl}/game_studies/${id}`)
     return await response.json()
 }
 
 export const fetchGames = async () => {
-    const response = await fetch(`${api_url}/games`)
+    const response = await fetch(`${apiUrl}/games`)
     return await response.json()
 }
 
 export const createRepertoire = async (data) => {
     const response = await fetch(
-        `${api_url}/repertoires`,
+        `${apiUrl}/repertoires`,
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -47,12 +65,12 @@ export const createRepertoire = async (data) => {
 }
 
 export const fetchRepertoire = async (id) => {
-    const response = await fetch(`${api_url}/repertoires/${id}`)
+    const response = await fetch(`${apiUrl}/repertoires/${id}`)
     return await response.json()
 }
 
 export const fetchRepertoires = async () => {
-    const response = await fetch(`${api_url}/repertoires`)
+    const response = await fetch(`${apiUrl}/repertoires`)
     return await response.json()
 }
 
@@ -98,7 +116,7 @@ export const lichessResponses = async (fen) => {
 
 export const createMove = async (data) => {
     const response = await fetch(
-        `${api_url}/repertoire_moves`,
+        `${apiUrl}/repertoire_moves`,
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -115,7 +133,7 @@ export const createMove = async (data) => {
 
 export const destroyRepertoireMove = async (data) => {
      const response = await fetch(
-        `${api_url}/repertoire_moves/${data.id}`,
+        `${apiUrl}/repertoire_moves/${data.id}`,
         {
             method: "DELETE"
         }
@@ -126,7 +144,7 @@ export const destroyRepertoireMove = async (data) => {
 export const confirmRepertoireMove = async (data) => {
     console.log(data)
     const response = await fetch(
-        `${api_url}/repertoire_moves/${data.id}`,
+        `${apiUrl}/repertoire_moves/${data.id}`,
         {
             method: "PUT",
             headers: {

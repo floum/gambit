@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
-import { bearer_token } from '@/config/app'
+const bearer_token = import.meta.env.VITE_LICHESS_TOKEN
+
 import { weightedRandom } from '@/assets/utils'
 
 export const fetchLichessMoves = async (fen) => {

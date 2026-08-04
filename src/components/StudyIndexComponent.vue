@@ -1,10 +1,11 @@
 <script setup>
+const api_url = import.meta.env.VITE_API_URL;
 import { ref, onMounted, computed } from 'vue';
 
 let studies = ref([]);
 
 onMounted(async () => {
-    const response = await fetch('http://192.168.1.22:3000/game_studies')
+    const response = await fetch(`${api_url}/game_studies`)
     studies.value = await response.json()
 })
 

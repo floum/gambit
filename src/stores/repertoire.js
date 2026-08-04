@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-
-import { api_url } from '@/config/app'
+import { apiUrl } from '@/assets/api.js'
 
 export const useRepertoireStore = defineStore('repertoire', {
     state: () => ({
@@ -16,7 +15,7 @@ export const useRepertoireStore = defineStore('repertoire', {
             return repertoire
         },
         async fetch(id) {
-            const response = await fetch(`${api_url}/repertoires/${id}`)
+            const response = await fetch(`${apiUrl}/repertoires/${id}`)
             return await response.json()
         }
     }

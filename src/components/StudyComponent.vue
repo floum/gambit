@@ -2,7 +2,7 @@
 import { TheChessboard } from 'vue3-chessboard'
 import StudyResultsComponent from './StudyResultsComponent.vue'
 import { ref, onMounted } from 'vue';
-import { fetchStudy } from '../assets/api.js'
+import { apiUrl, fetchStudy } from '../assets/api.js'
 
 const props = defineProps(['id'])
 
@@ -32,7 +32,7 @@ const loadBoard = (api) => {
 const handleMove = async (move) => {
     console.log(move)
     const response = await fetch(
-        `http://192.168.1.22:3000/game_studies/${study.value.id}/game_study_moves`,
+        `${apiUrl}/game_studies/${study.value.id}/game_study_moves`,
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
