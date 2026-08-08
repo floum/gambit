@@ -24,7 +24,7 @@ const visible = computed(() => {
     if (!repertoire.value) {
         return []
     }
-    return repertoire.value.repertoire_moves.filter(move => !move.confirmed)
+    return repertoire.value.repertoire_moves.filter(move => !move.status == "confirmed")
 })
 
 const setBoard = (api, repertoireMove) => {
