@@ -1,13 +1,17 @@
 import { defineStore } from 'pinia'
-import { apiUrl } from '@/assets/api.js'
+import { apiUrl, createMove } from '@/assets/api.js'
 
 export const useRepertoireMovesStore = defineStore('repertoire-moves', {
   state: () => ({
+    repertoire: {},
     moves: [],
     filter: 'unknown',
     filters: ['unknown', 'rejected', 'confirmed']
   }),
   actions: {
+    async add(move) {
+        return await createMove({move: move, repertoire: this.repertoire})
+    },
     async reject(move) {
       const response = await fetch(
         `${apiUrl}/repertoire_moves/${move.id}`,

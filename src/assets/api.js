@@ -123,7 +123,8 @@ export const createMove = async (data) => {
             body: JSON.stringify({ 
                 repertoire_move: {
                     move: data.move,
-                    repertoire: data.repertoire
+                    repertoire: { id: data.repertoire.id },
+                    status: 'unknown'
                 }
             })
         }

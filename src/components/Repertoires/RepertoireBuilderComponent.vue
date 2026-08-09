@@ -1,14 +1,16 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { TheChessboard } from 'vue3-chessboard';
 import { weightedRandom } from '@/assets/utils';
 import { createMove, confirmRepertoireMove } from '@/assets/api';
 
 import { useLichessResponseStore } from '@/stores/lichessResponse';
 import { useRepertoireStore } from '@/stores/repertoire';
+import { useRepertoireMovesStore } from '@/stores/repertoireMove';
 
 const lichess = useLichessResponseStore()
 const repertoireStore = useRepertoireStore()
+const movesStore = useRepertoireMovesStore()
 
 let boardAPI;
 
@@ -21,6 +23,8 @@ var opponentMove = ref(null)
 
 onMounted(async () => {
     repertoire.value = await repertoireStore.get(props.id)
+    movesStore.repertoire = repertoire.value
+    movesStore.moves = repertoire.value.repertoireMoves
     await reset()
 })
 
@@ -37,7 +41,7 @@ const playRandomLichessMove = async () => {
 
 const handleMove = async (move) => {
     if (move.color == (repertoire.value.white ? 'w' : 'b')) {
-        var response = await createMove({move: move, repertoire: repertoire.value})
+        var response = await movesStore.add(move)
         console.log(response)
         switch (response.status) {
             case 200:
