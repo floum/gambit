@@ -77,8 +77,7 @@ const reset = async () => {
 }
 
 const confirmMove = async () => {
-    const response = await confirmRepertoireMove(newMove.value)
-    console.log(response)
+    return await movesStore.update(newMove.value, { status: "confirmed" })
 }
 </script>
 

@@ -142,26 +142,6 @@ export const destroyRepertoireMove = async (data) => {
     return response.status == 204   
 }
 
-export const confirmRepertoireMove = async (data) => {
-    console.log(data)
-    const response = await fetch(
-        `${apiUrl}/repertoire_moves/${data.id}`,
-        {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                repertoire_move: {
-                    confirmed: true
-                }
-            })
-        }
-    )
-    return response.status < 400
-}
-
 export const loadBoxes = async (id) => {
     var repertoire = await fetchRepertoire(id)
     return repertoire.repertoire_moves.filter((move) => (move.box))
