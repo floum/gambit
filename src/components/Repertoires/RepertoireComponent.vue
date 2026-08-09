@@ -58,12 +58,8 @@ const confirm = async (repertoireMove) => {
 }
 
 const reject = async (repertoireMove) => {
-    var response = await rejectRepertoireMove(repertoireMove)
-    if (response.status < 400) {
-        const alertStore = useAlertStore()
-        alertStore.alert = 'Move successfully confirmed.'
-        alertStore.type = 'success'
-    }
+    var result = await movesStore.reject(repertoireMove)
+    console.log(result)
 }
 </script>
 
