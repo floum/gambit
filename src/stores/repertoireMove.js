@@ -12,7 +12,13 @@ export const useRepertoireMovesStore = defineStore('repertoire-moves', {
     async add(move) {
         return await createMove({move: move, repertoire: this.repertoire})
     },
+    async confirm(move) {
+      return this.update(move, { status: "confirmed"})
+    },
     async reject(move) {
+      return this.update(move, {status: "rejected"})
+    },
+    async update(move, data) {
       const response = await fetch(
         `${apiUrl}/repertoire_moves/${move.id}`,
         {
@@ -22,9 +28,7 @@ export const useRepertoireMovesStore = defineStore('repertoire-moves', {
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            repertoire_move: {
-              status: 'rejected'
-            }
+            repertoire_move: data
           })
         }
       )

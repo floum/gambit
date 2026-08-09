@@ -48,13 +48,8 @@ const destroy = async (repertoireMove) => {
     }
 }
 
-const confirm = async (repertoireMove) => {
-    var response = await confirmRepertoireMove(repertoireMove)
-    if (response.status < 400) {
-        const alertStore = useAlertStore()
-        alertStore.alert = 'Move successfully confirmed.'
-        alertStore.type = 'success'
-    }
+const confirm = async (move) => {
+    return await movesStore.confirm(move)
 }
 
 const reject = async (repertoireMove) => {
