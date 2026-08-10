@@ -9,8 +9,19 @@ export const useRepertoireMovesStore = defineStore('repertoire-moves', {
     filters: ['unknown', 'rejected', 'confirmed']
   }),
   actions: {
+    async create(data) {
+      return await createMove({move: data.move, repertoire: data.repertoire, status: "unknown"})
+    },
     async add(move) {
-        return await createMove({move: move, repertoire: this.repertoire})
+      console.log('adding move to store:' + JSON.stringify(move))
+      console.log(this.moves.length)
+      const existingMove = this.moves.find((knownMove) => knownMove.before == move.before)
+        if (existingMove) {
+          return existingMove
+        }
+      const newMove = await createMove({move: move, repertoire: this.repertoire, status: "unknown"})
+      this.moves.push(newMove)
+      return newMove
     },
     async confirm(move) {
       return this.update(move, { status: "confirmed"})

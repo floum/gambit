@@ -1,7 +1,7 @@
 <script setup>
   import { ref, onMounted, computed } from 'vue';
 import { TheChessboard } from 'vue3-chessboard';
-import { fetchRepertoire, destroyRepertoireMove, confirmRepertoireMove } from '@/assets/api';
+import { fetchRepertoire, destroyRepertoireMove } from '@/assets/api';
 import { useAlertStore } from '@/stores/alert';
 import { useRepertoireMovesStore } from '@/stores/repertoireMove';
 
