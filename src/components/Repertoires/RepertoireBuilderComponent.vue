@@ -29,10 +29,10 @@ const play = (move) => {
 
 const handleMove = async (move) => {
     if (move.color == repertoireStore.color) {
-        var m = await repertoireStore.add(move)
-        if (m.status == "rejected") {
+        console.log('HANDLING MOVE :' + JSON.stringify(move))
+        var result = await repertoireStore.add(move)
+        if (!result) {
           boardAPI.undoLastMove()
-          return false
         } 
         const fen = boardAPI.getFen()
         switch (nextMove.value) {
@@ -46,7 +46,6 @@ const handleMove = async (move) => {
             play(await lichess.weighted(fen))
             break
         }
-        return true
     }
 }
 

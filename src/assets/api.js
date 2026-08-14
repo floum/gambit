@@ -114,24 +114,6 @@ export const lichessResponses = async (fen) => {
     return lichess.moves.map((move) => { return {san: move.san, count: move.white + move.draws + move.black } }).sort((move1, move2) => (move2.count - move1.count))
 }
 
-export const createMove = async (data) => {
-    const response = await fetch(
-        `${apiUrl}/repertoire_moves`,
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-                repertoire_move: {
-                    move: data.move,
-                    repertoire: { id: data.repertoire.id },
-                    status: 'unknown'
-                }
-            })
-        }
-    )
-    return response
-}
-
 export const destroyRepertoireMove = async (data) => {
      const response = await fetch(
         `${apiUrl}/repertoire_moves/${data.id}`,

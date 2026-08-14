@@ -12,9 +12,11 @@ export const useRepertoireStore = defineStore('repertoire', {
           this.repertoire = await response.json()
         },
         async add(move) {
-          const existing = this.moves.find(known => known.before == move.before && known.san == move.san)
+          const existing = this.moves.find(known => known.fen == move.before && known.san == move.san)
           if (existing) {
+            console.log("EXISTING MOVE")
             if (existing.status == "rejected") {
+              console.log("REJECTED MOVE")
               return false
             }
             return true
