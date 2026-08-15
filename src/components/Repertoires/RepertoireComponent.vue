@@ -1,7 +1,8 @@
 <script setup>
   import { ref, onMounted, computed } from 'vue';
 import { TheChessboard } from 'vue3-chessboard';
-import { fetchRepertoire, destroyRepertoireMove } from '@/assets/api';
+import RepertoireMoveComponent from '@/components/Repertoires/RepertoireMoveComponent.vue'
+import { fetchRepertoire } from '@/assets/api';
 import { useAlertStore } from '@/stores/alert';
 import { useRepertoireMovesStore } from '@/stores/repertoireMove';
 
@@ -39,23 +40,6 @@ const setBoard = (api, repertoireMove) => {
     api.setConfig(config)
 }
 
-const destroy = async (repertoireMove) => {
-    var response = await destroyRepertoireMove(repertoireMove)
-        if (response.status < 400) {
-        const alertStore = useAlertStore()
-        alertStore.alert = 'Move successfully destroyed.'
-        alertStore.type = 'success'
-    }
-}
-
-const confirm = async (move) => {
-    return await movesStore.confirm(move)
-}
-
-const reject = async (repertoireMove) => {
-    var result = await movesStore.reject(repertoireMove)
-    console.log(result)
-}
 </script>
 
 <template>
@@ -73,24 +57,16 @@ const reject = async (repertoireMove) => {
         </template>
       </select>
     </div>
-    <div class="repertoire-moves-grid">
+    <div class="repertoire-moves">
+      <div class="row">
       <template v-for="repertoireMove in movesStore.filteredMoves">
-        <div class="repertoire-move-board">
-          <TheChessboard class="chessboard"
-                         @board-created="(api) => (setBoard(api, repertoireMove))" />
+        <div class="col-4">
+        <div class="repertoire-move">
+          <RepertoireMoveComponent :repertoireMove="repertoireMove" />
         </div>
-        <div>
-          <div>{{ repertoireMove.san }}</div>
-          <div>{{ repertoireMove.status }}</div>
-          <div><a :href="'https://lichess.org/analysis/' + repertoireMove.fen" target="_blank">Lichess</a>
-          </div>
-          <div>
-            <button class="btn-gambit btn-small" @click="confirm(repertoireMove)">Confirm</button>
-            <button class="btn-gambit btn-small" @click="reject(repertoireMove)">Reject</button>
-            <button class="btn-gambit btn-danger btn-small" @click="destroy(repertoireMove)">Remove</button>
-          </div>
-        </div>    
+        </div>
       </template>
+      </div>
     </div>
   </div>
 </template>

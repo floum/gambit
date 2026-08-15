@@ -114,16 +114,6 @@ export const lichessResponses = async (fen) => {
     return lichess.moves.map((move) => { return {san: move.san, count: move.white + move.draws + move.black } }).sort((move1, move2) => (move2.count - move1.count))
 }
 
-export const destroyRepertoireMove = async (data) => {
-     const response = await fetch(
-        `${apiUrl}/repertoire_moves/${data.id}`,
-        {
-            method: "DELETE"
-        }
-    )
-    return response.status == 204   
-}
-
 export const loadBoxes = async (id) => {
     var repertoire = await fetchRepertoire(id)
     return repertoire.repertoire_moves.filter((move) => (move.box))

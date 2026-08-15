@@ -59,6 +59,15 @@ export const useRepertoireMovesStore = defineStore('repertoire-moves', {
       )
       return response.status < 400
     },
+    async destroy(move) {
+     const response = await fetch(
+        `${apiUrl}/repertoire_moves/${data.id}`,
+        {
+            method: "DELETE"
+        }
+    )
+    return response.status == 204   
+    },
   },
   getters: {
     unknownMoves(state) {
